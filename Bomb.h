@@ -16,8 +16,7 @@
 #include "Gamepiece.h"
 
 
-class Bomb : public Gamepiece
-{
+class Bomb : public Gamepiece {
     public:
 	Bomb(int , int , int , int , int ,string);
 	virtual string getDisplay();

@@ -28,9 +28,10 @@
 
 using namespace std;
 
-
+// Declare Main Function
 int main()
 {
+
 	int idcounter = 151;
 	string  quitchoice,pname;
 	char blockType, direction;
@@ -46,26 +47,30 @@ int main()
 
 	bool moreMove = true;
 
+	// Create an instance of Gamepiece, b
 	Gamepiece* b;	
 
+	// Get and store Player's name
 	cout << "Please enter your name: " <<endl;
 	cin >> pname;
 
+	// Welcome the player to the game
 	cout << "WELCOME TO STRATEGEO TRAINING" << endl;
 	cout << endl;
 	
-	
-
-
+	// Create a new instance of a game Grid, given parameters gridY, gridX (size of grid)
 	Grid* game = new Grid(gridY,gridX);
 	Cplayer* dumbplayer = new Cplayer(game);
-		
+	
+	// Feedback for UX
 	cout << "Printing the Game Board" << endl;
 	cout << endl;
 	cout << endl;
 	
+	// Call printGrid method on the game object
 	game->printGrid();
-	
+
+	// Add spacing for UX
 	cout << endl;
 	cout << endl;
 	
@@ -73,26 +78,25 @@ int main()
 
 
 	
-	//MAKE FIVE BOMBS
+	// MAKE FIVE BOMBS
 	cout << "First you need to place 5 bombs" << endl;
-	for(int i = 0; i < 5; i++)//It's a loop in case of a double flag game
-	{
+	for(int i = 0; i < 5; i++) {
+		// Keep track of which bomb is being placed
 		cout << "Pick a location for bomb number: " << (i+1) << endl;
 
-		
+		// Get Y Coordinate
 		cout << "Pick a X coordinate (left side is 0)" << endl;
 		cin >> blockY;
-		
+		// Get X Coordinate
 		cout << "Pick a Y coordinate (6 to 8)" << endl;
-		cin >> blockX;//blockx and Y got switched somehow
+		cin >> blockX;// blockx and Y got switched somehow ???
 
-
-		if(blockX >= 6 && blockY <= 8)
-		{
+		// If block is placed within first 3 rows and on the board
+		if(blockX >= 6 && blockY <= 8){
+			// Create a bomb object to be placed
 			Gamepiece* p = new Bomb(0,1,blockY,blockX, idcounter, "BOMB");
 			
-			if(game->addGamepiece(p))
-			{
+			if(game->addGamepiece(p)){
 				idcounter++;
 				cout << "Your Flag has been placed" << endl;
 			}

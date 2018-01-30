@@ -3,8 +3,7 @@
 #include "Grid.h"
 
 
-Grid::Grid(int a, int b) 
-{
+Grid::Grid(int a, int b) {
 	numREM = 0;
 	numMOV = 0;
 	winner = 0;
@@ -23,8 +22,7 @@ Grid::Grid(int a, int b)
 
 
 
-void Grid::printGrid()
-	{
+void Grid::printGrid(){
 		for(int j = 0; j < gridH; j++)
 		{
 			cout << "+ - + - + - + - + - + - + - + - + - +" << endl;
@@ -46,41 +44,34 @@ void Grid::printGrid()
 			cout << endl;
 		}
 		cout << "+ - + - + - + - + - + - + - + - + - +" << endl;
-	}
+}
 	
-int Grid::getNumREM()
-	{
+int Grid::getNumREM(){
 		return numREM;
-	}
+}
 	
-void Grid::changeNumREM(int num)
-	{
+void Grid::changeNumREM(int num){
 		numREM+= num;
 		numMOV+= num;
-	}
+}
 
-int Grid::getNumMOV()
-	{//used to check if anything can be moved
-		return numMOV;
-	}
-void Grid::changeNumMOV(int num)
-	{
-		numMOV+= num;
-	}
+int Grid::getNumMOV(){ // used to check if anything can be moved
+	return numMOV;
+}
+void Grid::changeNumMOV(int num){
+	numMOV+= num;
+}
 	
-int Grid::gettotal()
-	{//total number of blocks from creation of the grid
-		return blocklist.size();
-	}
+int Grid::gettotal(){ // total number of blocks from creation of the grid
+	return blocklist.size();
+}
 	
 	
-Gamepiece* Grid::findcell(int x, int y)
-	{
-		return theGridd[make_pair(x,y)];
-	}
+Gamepiece* Grid::findcell(int x, int y){
+	return theGridd[make_pair(x,y)];
+}
 	
-int Grid::seeopen(Gamepiece* thisblock, bool started)
-	{
+int Grid::seeopen(Gamepiece* thisblock, bool started){
 		
 		if(thisblock->getTopLeftX() < 0 || thisblock->getTopLeftY() < 0 || ( thisblock->getTopLeftY() + thisblock->getblockH() ) > gridH ||  ( thisblock->getTopLeftX() + thisblock->getblockW() )> gridW)
 		{//if the block goes past any edge of the grid
@@ -160,10 +151,9 @@ int Grid::seeopen(Gamepiece* thisblock, bool started)
 		}
 		
 		return 1;
-	}
+}
 
-bool Grid::addGamepiece(Gamepiece* thisblock)
-	{
+bool Grid::addGamepiece(Gamepiece* thisblock) {
 		if(seeopen(thisblock, 0))
 		{
 			for(int i = 0; i < thisblock->getblockH(); i++)
@@ -183,11 +173,9 @@ bool Grid::addGamepiece(Gamepiece* thisblock)
 			return false;
 		}
 		
-	}
-
+}
 	
-void Grid::move(char direction, Gamepiece* thisblock)
-	{
+void Grid::move(char direction, Gamepiece* thisblock) {
 		int xshift = 0;
 		int yshift = 0;
 		
@@ -292,11 +280,9 @@ void Grid::move(char direction, Gamepiece* thisblock)
 			}			
 			delete tempblock;//the temp block isn't needed anymore
 		}
-	}
-
+}
 	
-char Grid::battle(Gamepiece* attacker, Gamepiece* defender)
-{
+char Grid::battle(Gamepiece* attacker, Gamepiece* defender){
 	cout<<"Attacker's Power is: " << attacker->getpower() <<endl;
 	cout<<"Defender's Power is: " << defender->getpower() <<endl;
 	if( defender->getpower() == 9)
@@ -335,13 +321,11 @@ char Grid::battle(Gamepiece* attacker, Gamepiece* defender)
 	}
 }
 
-int Grid::findwinner()
-{
+int Grid::findwinner(){
 	return winner;
 }
 
-vector<string> Grid::scancount(int tplayer)
-{
+vector<string> Grid::scancount(int tplayer){
 	tdisplays.clear();
 	for(int i = 0; i < 9; i++)
 	{
