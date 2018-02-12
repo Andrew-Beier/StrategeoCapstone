@@ -1,17 +1,4 @@
 
-/* Andrew Beier HW #7
-	I used a vector to hold the display information of all the players pieces.
-	I used a map to make the gameboard
-	I used .clear, .pushback, and .size when dealing with the vector of display information.
-	I could not find a use or need for a lambda or function object for my game, and I will take a small reduction for it.
-	I still use inheritance even though it is no longer required
-	I used dynamic memory allocation with my classes
-	I also use poymorphisim with some of the functions in my classes
-	From myers book, I used Items; 4, 7, 9, 13, 21, 22, 32, 36, 37,
-	
-
-
-*/
 #include <iostream>
 #include <string>
 #include <vector>
@@ -75,8 +62,8 @@ int main()
 	cout << endl;
 	
 
-
-
+	//Custom Setup is Disabled for Testing Purposes
+	/*
 	
 	// MAKE FIVE BOMBS
 	cout << "First you need to place 5 bombs" << endl;
@@ -380,6 +367,74 @@ int main()
 		}
 		game->printGrid();
 	}
+	
+	*/
+	
+	//Automatic placement of player pieces
+	for(int i = 0; i < 1; i++)// FLAG
+	{
+		Gamepiece* p = new Flag(9,1,8,8, idcounter, "FLAG");
+		game->addGamepiece(p);
+		idcounter ++;
+	}
+	
+	for(int i = 0; i < 6; i++)//power 6
+	{
+		blockX = i;
+		Gamepiece* p = new Gamepiece(6,1,7-i,8, idcounter, "SOLDIER");
+		game->addGamepiece(p);
+		idcounter ++;
+	}
+	
+	for(int i = 0; i < 2; i++)// power 2
+	{
+		blockX = i;
+		Gamepiece* p = new Gamepiece(2,1,1-i,8, idcounter, "SOLDIER");
+		game->addGamepiece(p);
+		idcounter ++;
+	}
+	
+	for(int i = 0; i < 5; i++)// BOMBS
+	{
+		blockX = i;
+		Gamepiece* p = new Bomb(0,1,i,7, idcounter, "BOMB");
+		game->addGamepiece(p);
+		idcounter ++;
+	}
+	
+	for(int i = 0; i < 4; i++)// power 4
+	{
+		blockX = i;
+		Gamepiece* p = new Gamepiece(4,1,i+5,7, idcounter, "SOLDIER");
+		game->addGamepiece(p);
+		idcounter ++;
+	}
+	
+	for(int i = 0; i < 3; i++)// power 3
+	{
+		blockX = i;
+		Gamepiece* p = new Gamepiece(3,1,i,6, idcounter, "SOLDIER");
+		game->addGamepiece(p);
+		idcounter ++;
+	}
+	
+	for(int i = 0; i < 5; i++)// power 5
+	{
+		blockX = i;
+		Gamepiece* p = new Gamepiece(5,1,i+3,6, idcounter, "SOLDIER");
+		game->addGamepiece(p);
+		idcounter ++;
+	}
+	
+	for(int i = 0; i < 1; i++)// power 1
+	{
+		blockX = i;
+		Gamepiece* p = new Gamepiece(1,1,8,6, idcounter, "SOLDIER");
+		game->addGamepiece(p);
+		idcounter ++;
+	}
+
+
 	
 	cout << endl;
 	cout << "THE BOARD IS SET" << endl;
