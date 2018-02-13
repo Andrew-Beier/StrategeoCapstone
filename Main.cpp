@@ -104,7 +104,7 @@ int main()
 	
 	//MAKE A FLAG
 	cout << "Next Place your flag" << endl;
-	for(int i = 0; i < 1; i++)//It's a loop in case of a double flag game
+	for(int i = 0; i < 1; i++)
 	{
 		cout << "Pick a location for your flag" <<  endl;
 
@@ -118,7 +118,7 @@ int main()
 
 		if(blockX >= 6 && blockY <= 8)
 		{
-			Gamepiece* p = new Flag(9,1,blockY,blockX, idcounter, "FLAG");
+			Gamepiece* p = new Flag(12,1,blockY,blockX, idcounter, "FLAG");
 			
 			if(game->addGamepiece(p))
 			{
@@ -373,7 +373,7 @@ int main()
 	//Automatic placement of player pieces
 	for(int i = 0; i < 1; i++)// FLAG
 	{
-		Gamepiece* p = new Flag(9,1,8,8, idcounter, "FLAG");
+		Gamepiece* p = new Flag(12,1,8,8, idcounter, "FLAG");
 		game->addGamepiece(p);
 		idcounter ++;
 	}
@@ -433,7 +433,7 @@ int main()
 		game->addGamepiece(p);
 		idcounter ++;
 	}
-
+	//Automatic placement of player pieces Complete
 
 	
 	cout << endl;
@@ -446,7 +446,7 @@ int main()
 	cout << endl;
 	
 
-	while(moreMove)	//currently endless
+	while(moreMove)	
 	{
 			vector<string> pvec = game->scancount(1);//could be used for more, but the other features are not helpfull
 			cout << pname << " it is your turn." << endl;

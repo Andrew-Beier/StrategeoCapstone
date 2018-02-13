@@ -23,9 +23,13 @@ Grid::Grid(int a, int b) {
 
 
 void Grid::printGrid(){
+	cout << endl;
+	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |" << endl;
+	cout << endl;
+	cout << "---   + - + - + - + - + - + - + - + - + - +   ---" << endl;
 		for(int j = 0; j < gridH; j++)
 		{
-			cout << "+ - + - + - + - + - + - + - + - + - +" << endl;
+			cout << " " << j << "    " ;
 			for(int i = 0; i < gridW; i++)
 			{
 				
@@ -39,11 +43,14 @@ void Grid::printGrid(){
 				{
 					cout << "   ";
 				}
+				
 			}
-			cout << "|";
-			cout << endl;
+			cout << "|    " << j << endl;
+			cout << "---   + - + - + - + - + - + - + - + - + - +   ---" << endl;
+			
 		}
-		cout << "+ - + - + - + - + - + - + - + - + - +" << endl;
+	cout << endl;
+	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |" << endl;
 }
 	
 int Grid::getNumREM(){
@@ -283,41 +290,65 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 }
 	
 char Grid::battle(Gamepiece* attacker, Gamepiece* defender){
+	cout << endl;
+	cout << endl;
 	cout<<"Attacker's Power is: " << attacker->getpower() <<endl;
 	cout<<"Defender's Power is: " << defender->getpower() <<endl;
-	if( defender->getpower() == 9)
+	if( defender->getpower() == 12)
 	{
 		cout<<"A FLAG HAS BEEN CAPTURED!" <<endl;
 		return '5';
 	}
+	
 	else if(defender->getpower() == 0)
 	{
-		cout<<"The bomb explodes... " <<endl;
-		cout<<"Both Pieces Removed " <<endl;
-		return '1';	
+		if(attacker->getpower() == 8)
+		{
+			cout<<"The miner defuses a bomb " <<endl;
+			cout<<"Defender Removed " <<endl;
+			return '2';
+		}
+		else
+		{
+			cout<<"The bomb explodes... " <<endl;
+			cout<<"Attacker Removed " <<endl;
+			return '3';
+		}		
 	}
+	
+	else if(defender->getpower() == 1 && attacker->getpower() == 10)
+	{
+		cout<<"The spy has found its target " <<endl;
+		cout<<"Defender Removed " <<endl;
+		return '2';
+	}
+	
 	else if(attacker->getpower() < defender->getpower())
 	{
 		cout<<"Attacker Wins " <<endl;
 		cout<<"Defender Removed " <<endl;
 		return '2';
 	}
+	
 	else if(attacker->getpower() > defender->getpower())
 	{
 		cout<<"Defender Wins " <<endl;
 		cout<<"Attacker Removed " <<endl;
 		return '3';
 	}
+	
 	else if(attacker->getpower() == defender->getpower())
 	{
 		cout<<"It's a Draw " <<endl;
-		cout<<"Both Pieces Remain " <<endl;
-		return '4';
+		cout<<"Both Pieces Removed " <<endl;
+		return '1';
 	}
+
 	else
 	{
 		cout<<"Something has gone terribly wrong... " <<endl;
-		return '6';
+		cout<<"Both Pieces Remain " <<endl;
+		return '4';
 	}
 }
 

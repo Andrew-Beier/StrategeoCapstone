@@ -5,7 +5,7 @@
 using namespace std;
 
 
-Flag::Flag(int a, int b, int c, int d, int thisID,string btype): Gamepiece(9,b,c,d,thisID,"FLAG")
+Flag::Flag(int a, int b, int c, int d, int thisID,string btype): Gamepiece(12,b,c,d,thisID,"FLAG")
 {
 	
 }

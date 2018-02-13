@@ -10,7 +10,7 @@ Cplayer::Cplayer(Grid* game)
 	
 	for(int i = 0; i < 1; i++)// FLAG
 	{
-		Gamepiece* p = new Flag(9,2,0,0, idcounter, "FLAG");
+		Gamepiece* p = new Flag(12,2,0,0, idcounter, "FLAG");
 		game->addGamepiece(p);
 		idcounter ++;
 	}
