@@ -1,6 +1,8 @@
 //Filename: Cplayer.cpp
 #include "Cplayer.h"
 
+// This class needs logic to actually play the game
+// Currently this class doesn't know how the board is positioned, pieces it has, etc.
 
 Cplayer::Cplayer(Grid* game){
 	idcounter = 101;

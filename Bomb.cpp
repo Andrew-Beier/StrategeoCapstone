@@ -1,14 +1,15 @@
 //Filename: BOMB.CPP
 
+// This is a complete class
 #include "Bomb.h"
 
 using namespace std;
 
 
-Bomb::Bomb(int a, int b, int c, int d, int thisID,string btype): Gamepiece(0,b,c,d,thisID,"BOMB"){
+Bomb::Bomb(int a, int b, int c, int d, int thisID, string btype): Gamepiece(0,b,c,d,thisID,"BOMB"){
 	
 }
-	
+
 bool Bomb::canmove(){
 	return 0;	
 }

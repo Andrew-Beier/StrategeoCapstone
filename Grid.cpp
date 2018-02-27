@@ -18,8 +18,6 @@ Grid::Grid(int a, int b) {
 		}
 	}
 }
-	
-
 
 
 void Grid::printGrid(){

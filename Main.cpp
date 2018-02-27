@@ -16,6 +16,24 @@
 
 using namespace std;
 
+// For development - Currently setup to auto create the grid in a typical order
+
+// TODO
+// Convert map/vector into a 2D array
+	// Primary changes are in Grid.cpp & Grid.H
+
+// Make grid fullsize -- will need to fix the print function with this
+
+// Add Remaining pieces movement
+
+// Write funcitonal logic for the computer to be able to play with a human player
+	// Add troubleshooting option to reveal location of pieces
+	
+// Expand on the above through learning
+	// Keeps track of pieces
+	// Basic ML for setup
+
+
 // Declare Main Function
 int main()
 {
@@ -453,12 +471,12 @@ int main()
 	cout << endl;
 	
 
-	while(moreMove)	
+	while(moreMove)
 	{
+			// this will be changed to an array
 			vector<string> pvec = game->scancount(1);//could be used for more, but the other features are not helpfull
 			cout << pname << " it is your turn." << endl;
 			cout << "You have " << pvec.size() << " pieces under your command" << endl;
-			
 			
 			cout << "Pick a X coordinate for a movable block:" << endl;
 			cin >> moveY;

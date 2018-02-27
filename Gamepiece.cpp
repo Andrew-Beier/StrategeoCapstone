@@ -1,6 +1,7 @@
 //Filename: Gamepiece.cpp
 #include "Gamepiece.h"
 
+// This is complete for now
 
 Gamepiece::Gamepiece(int a, int b, int c, int d, int thisID, string btype){
 	power= a;

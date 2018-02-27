@@ -1,5 +1,7 @@
 //Filename: Flag.cpp
 
+// This is a complete class
+
 #include "Flag.h"
 
 using namespace std;
