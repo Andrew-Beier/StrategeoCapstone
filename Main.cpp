@@ -7,6 +7,7 @@
 #include <iostream>
 #include <algorithm>
 #include <list>
+// Compiled Classes
 #include "Gamepiece.h"
 #include "Grid.h"
 #include "Flag.h"
@@ -19,19 +20,25 @@ using namespace std;
 int main()
 {
 
+	// Starting ID # for pieces
 	int idcounter = 151;
-	string  quitchoice,pname;
+	string  quitchoice, pname;
 	char blockType, direction;
+	// set up a 9x9 grid
 	int gridX = 9;
 	int gridY = 9;
+	// total # of game pieces
 	int numblocks = 54;
+	// set the physical size of a piece
 	int blockDimX = 1;
-	int blockDimY = 1; 
+	int blockDimY = 1;
+	// coordinate for position
 	int blockX, blockY;
+	// unused?
 	int t1pieces = 2;
-
+	// Movement magnitude
 	int moveX, moveY;
-
+	// Check to see if game should continue (actual game loop)
 	bool moreMove = true;
 
 	// Create an instance of Gamepiece, b

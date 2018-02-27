@@ -2,6 +2,15 @@
 Thumbs.db
 ehthumbs.db
 
+# WINDOWS EXECUTABLES, etc
+*.exe
+
+# MAC EXECUTABLES, etc
+*.out
+*.gch
+
+# iCloud
+*.icloud
 # Folder config file
 Desktop.ini
 
