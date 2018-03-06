@@ -28,7 +28,7 @@ class Cplayer
 		
 	public:
 		Cplayer(Grid*);
-		int taketurn();
+		void taketurn();
 
 };
 

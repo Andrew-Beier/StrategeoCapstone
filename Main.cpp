@@ -58,6 +58,7 @@ int main()
 	int moveX, moveY;
 	// Check to see if game should continue (actual game loop)
 	bool moreMove = true;
+	bool customSetup = false;
 
 	// Create an instance of Gamepiece, b
 	Gamepiece* b;	
@@ -86,10 +87,8 @@ int main()
 	cout << endl;
 	cout << endl;
 	
-
 	//Custom Setup is Disabled for Testing Purposes
-	/*
-	
+	if(customSetup){
 	// MAKE FIVE BOMBS
 	cout << "First you need to place 5 bombs" << endl;
 	for(int i = 0; i < 5; i++) {
@@ -392,8 +391,7 @@ int main()
 		}
 		game->printGrid();
 	}
-	
-	*/
+	}
 	
 	//Automatic placement of player pieces
 	for(int i = 0; i < 1; i++)// FLAG

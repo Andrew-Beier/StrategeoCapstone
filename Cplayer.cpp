@@ -67,7 +67,7 @@ Cplayer::Cplayer(Grid* game){
 
 }
 
-int Cplayer::taketurn(){
+void Cplayer::taketurn(){
 	cout << "The stupid computer player refuses to move a piece..." << endl;
 		//I was going to make move random pieces in random directions, but that is too much work for this project
 }
