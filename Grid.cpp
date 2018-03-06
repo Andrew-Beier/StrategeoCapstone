@@ -2,21 +2,25 @@
 
 #include "Grid.h"
 
-
+// TODO Clean up these arguments later
 Grid::Grid(int a, int b) {
 	numREM = 0;
 	numMOV = 0;
 	winner = 0;
-	gridW = a; 
-	gridH = b;
-			
-	for(int i = 0; i < gridW; i++)
-	{
-		for(int j = 0; j < gridH; j++)
-		{
-			theGridd[make_pair(i,j)] = NULL;
-		}
-	}
+	gridW = 10; 
+	gridH = 10;
+
+	// Create the gameboard - Creates a 2D array (10x10) of gamepiece's in each position
+	// gamepiece gameboard[gridW][gridH];
+
+
+	// for(int i = 0; i < gridW; i++)
+	// {
+	// 	for(int j = 0; j < gridH; j++)
+	// 	{
+	// 		theGridd[make_pair(i,j)] = NULL;
+	// 	}
+	// }
 }
 
 
@@ -25,6 +29,8 @@ void Grid::printGrid(){
 	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |" << endl;
 	cout << endl;
 	cout << "---   + - + - + - + - + - + - + - + - + - +   ---" << endl;
+
+
 		for(int j = 0; j < gridH; j++)
 		{
 			cout << " " << j << "    " ;
@@ -33,9 +39,9 @@ void Grid::printGrid(){
 				
 				cout << "|";
 				
-				if( theGridd[make_pair(i, j)] != NULL )
+				if(gameboard[j][i] != NULL )
 				{
-					cout << theGridd[make_pair(i, j)]->getDisplay();
+					cout << gameboard[j][i]->getDisplay();
 				}
 				else
 				{
@@ -64,26 +70,46 @@ int Grid::getNumMOV(){ // used to check if anything can be moved
 	return numMOV;
 }
 void Grid::changeNumMOV(int num){
-	numMOV+= num;
+	numMOV += num;
 }
 	
 int Grid::gettotal(){ // total number of blocks from creation of the grid
 	return blocklist.size();
-}
-	
+}	
 	
 Gamepiece* Grid::findcell(int x, int y){
-	return theGridd[make_pair(x,y)];
+	return gameboard[x][y];
 }
 	
 int Grid::seeopen(Gamepiece* thisblock, bool started){
 		
+		// Revisit This later for necessity
 		if(thisblock->getTopLeftX() < 0 || thisblock->getTopLeftY() < 0 || ( thisblock->getTopLeftY() + thisblock->getblockH() ) > gridH ||  ( thisblock->getTopLeftX() + thisblock->getblockW() )> gridW)
 		{//if the block goes past any edge of the grid
 			return 0;
 		}
+
+		if(gameboard[thisblock->getTopLeftX][thisblock->getTopLeftY] == NULL)
+		{
+			return 1;
+		} else {
+			return 0;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
 		for(int i = 0; i < thisblock->getblockH(); i++)
-		{//the loops should only run once since a gamepice is only one block across
+		{//the loops should only run once since a gamepiece is only one block across
 			for(int j = 0; j < thisblock->getblockW(); j++)
 			{
 				if(theGridd[make_pair(i + thisblock->getTopLeftX(), j + thisblock->getTopLeftY())] != NULL)

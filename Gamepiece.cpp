@@ -3,6 +3,7 @@
 
 // This is complete for now
 
+// Farsides, etc need to be removed / renamed for 1x1 block simplicity
 Gamepiece::Gamepiece(int a, int b, int c, int d, int thisID, string btype){
 	power= a;
 	team = b;

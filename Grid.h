@@ -21,13 +21,13 @@ using namespace std;
 class Grid
 {
    private:
-		map<pair<int,int> , Gamepiece* > theGridd;
+		gamepiece gameboard[10][10];
 		vector<Gamepiece*> blocklist;
 		vector<string> tdisplays;
 		int gridW;
 		int gridH;
-		int numMOV;//blocks that can be moved
-		int numREM;//blocks that have to be removed
+		int numMOV;// blocks that can be moved
+		int numREM;// blocks that have to be removed
 		int winner;
 		
 	public:
