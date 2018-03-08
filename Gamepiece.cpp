@@ -14,7 +14,18 @@ Gamepiece::Gamepiece(int a, int b, int c, int d, int thisID, string btype){
 	farsideX = c;
 	farsideY = d ;	
 }
-	
+
+Gamepiece::Gamepiece(){
+	power = 0;
+	team = 1;
+	topleftX = 0;
+	topleftY = 0;
+	id = 9999;
+	blocktype = "TYPELESS";
+	farsideX = 0;
+	farsideY = 0;
+}
+
 int Gamepiece::getId(){
 	return id;
 }

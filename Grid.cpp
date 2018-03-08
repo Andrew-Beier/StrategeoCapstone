@@ -11,7 +11,7 @@ Grid::Grid(int a, int b) {
 	gridH = 10;
 
 	// Create the gameboard - Creates a 2D array (10x10) of gamepiece's in each position
-	// gamepiece gameboard[gridW][gridH];
+	gameboard = new Gamepiece[10][10];
 
 
 	// for(int i = 0; i < gridW; i++)
@@ -23,14 +23,11 @@ Grid::Grid(int a, int b) {
 	// }
 }
 
-
 void Grid::printGrid(){
 	cout << endl;
 	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |" << endl;
 	cout << endl;
 	cout << "---   + - + - + - + - + - + - + - + - + - +   ---" << endl;
-
-
 		for(int j = 0; j < gridH; j++)
 		{
 			cout << " " << j << "    " ;
@@ -331,9 +328,9 @@ vector<string> Grid::scancount(int tplayer){
 		{
 			if(gameboard[i][j] != NULL)
 			{
-				if((gameboard[i][j])->getteam() == tplayer)
+				if((gameboard[i][j]).getteam() == tplayer)
 				{
-					tdisplays.push_back((gameboard[i][j])->getDisplay());
+					tdisplays.push_back((gameboard[i][j]).getDisplay());
 				}
 			}
 		}
