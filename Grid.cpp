@@ -88,122 +88,95 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 		{//if the block goes past any edge of the grid
 			return 0;
 		}
-
-		if(gameboard[thisblock->getTopLeftX][thisblock->getTopLeftY] == NULL)
+		// If the game hasn't started yet
+		else if(!started)
 		{
-			return 1;
-		} else {
 			return 0;
 		}
+		// Is the board space that the user is trying to move to open?
+		else if(gameboard[thisblock->getTopLeftX][thisblock->getTopLeftY] == NULL)
+		{
+			return 1;
+		} 
+		else 
+		{
 
+		}
 
-
-
-
-
-
-
-
-
-
-
-
-		for(int i = 0; i < thisblock->getblockH(); i++)
-		{//the loops should only run once since a gamepiece is only one block across
-			for(int j = 0; j < thisblock->getblockW(); j++)
+		if(gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] != NULL)
+		{
+			if (!started)
 			{
-				if(theGridd[make_pair(i + thisblock->getTopLeftX(), j + thisblock->getTopLeftY())] != NULL)
-				{
-					if (!started)
-					{
-						return 0;
-					}
-					Gamepiece* target = theGridd[make_pair(i + thisblock->getTopLeftX(), j + thisblock->getTopLeftY())];
-					if( target->getteam() == 1)
-					{
-						return 0;
-					}
-					else
-					{
-						char res = battle(thisblock,target);
-						switch ( res ) 
-						{  
-						case '1' :  
-							delete thisblock;
-							for(int i = 0; i < target->getblockH(); i++)
-							{
-								for(int j = 0; j < target->getblockW(); j++)
-								{
-									theGridd[make_pair(i + target->getTopLeftX(), j + target->getTopLeftY())] = NULL;
-								}
-							}
-							delete target;
-							return 2;
-							break;  
-						case '2' :  
-							for(int i = 0; i < target->getblockH(); i++)
-							{
-								for(int j = 0; j < target->getblockW(); j++)
-								{
-									theGridd[make_pair(i + target->getTopLeftX(), j + target->getTopLeftY())] = NULL;
-								}
-							}
-							delete target;
-							return 1;
-							break;  
-						case '3' :  
-							delete thisblock;
-							return 2;
-							break;  
-						case '4' :  
-							return 3;
-							break;  
-						case '5' :  
-							for(int i = 0; i < target->getblockH(); i++)
-							{
-								for(int j = 0; j < target->getblockW(); j++)
-								{
-									theGridd[make_pair(i + target->getTopLeftX(), j + target->getTopLeftY())] = NULL;
-								}
-							}
-							delete target;
-							winner = thisblock->getteam();
-							return 1;
-							break;  
-						default: 
-							return 999;		      
-						}  
-						return 1;
-					}
-					
+				return 0;
+			}
+
+			// Makes a working copy of the current piece
+			Gamepiece* target = gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()];
+
+			// Computer cannot currently play because this checks to ensure it's the user
+			// 1 is user, 0 is computer - if it's your piece at that position you cannot move there, else battle
+			if(target->getteam() == 1)
+			{
+				return 0;
+			}
+			else
+			{
+				// battle happens
+				char res = battle(thisblock,target);
+				switch ( res ) 
+				{  
+				case '1' :  
+					// both user and computer pieces are deleted
+					delete thisblock;
+					gameboard[target->getTopLeftX()][target->getTopLeftY()] = NULL;
+					delete target;
+					return 2;
+					break;  
+				case '2' :  
+					// Computer won
+					gameboard[target->getTopLeftX()][target->getTopLeftY()] = NULL;
+					delete target;
+					return 1;
+					break;  
+				case '3' :  
+					// User win
+					delete thisblock;
+					return 2;
+					break;  
+				case '4' :  
+					// unused?
+					return 3;
+					break;  
+				case '5' :
+					// flag captured
+					gameboard[target->getTopLeftX()][target->getTopLeftY()] = NULL;
+					delete target;
+					winner = thisblock->getteam();
+					return 1;
+					break;  
+				default: 
+					// error
+					return 999;		      
 				}
-				
+				return 1;
 			}
 		}
-		
-		return 1;
+return 1;
 }
 
 bool Grid::addGamepiece(Gamepiece* thisblock) {
-		if(seeopen(thisblock, 0))
-		{
-			for(int i = 0; i < thisblock->getblockH(); i++)
-			{
-				for(int j = 0; j < thisblock->getblockW(); j++)
-				{
-					theGridd[make_pair(i + thisblock->getTopLeftX(), j + thisblock->getTopLeftY())] = thisblock;
-				}
-			}
-			blocklist.push_back(thisblock);
-			return true;
-		}
-		else
-		{
-			cout << "You can't put a block there!" << endl;
-			cout << endl;
-			return false;
-		}
-		
+	if(seeopen(thisblock, 0))
+	{
+		gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = thisblock;
+		blocklist.push_back(thisblock);
+		return true;
+	}
+	else
+	{
+		cout << "You can't put a block there!" << endl;
+		cout << endl;
+		return false;
+	}
 }
 	
 void Grid::move(char direction, Gamepiece* thisblock) {
@@ -245,15 +218,8 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 		Gamepiece* tempblock = new Gamepiece(thisblock -> getpower(), thisblock -> getteam(), thisblock -> getTopLeftX(), thisblock -> getTopLeftY(), thisblock -> getId(), thisblock -> getType());
 	
 
-		//removes the block before checking for clear spaces
-		for(int i = 0; i < thisblock->getblockH(); i++)
-			{
-				for(int j = 0; j < thisblock->getblockW(); j++)
-				{
-					theGridd[make_pair(i + thisblock->getTopLeftX(), j + thisblock->getTopLeftY())] = NULL;
-				}
-			}
-
+		// removes the block before checking for clear spaces by setting it's old location to null
+		gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = NULL;
 			
 		
 		tempblock->move1(xshift, yshift);
@@ -261,27 +227,16 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 		int cdetect = seeopen(tempblock, 1);
 		if( cdetect == 1)
 		{
-			for(int i = 0; i < thisblock -> getblockH(); i++)
-			{
-				for(int j = 0; j < thisblock -> getblockW(); j++)
-				{
-					theGridd[make_pair (i + thisblock->getTopLeftX(), j + thisblock->getTopLeftY() )] = NULL;
-				}
-			}
-			//moves if the space is clear
+			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = NULL;
+
+			// Applies movement changes to the correct block if the space is clear
 			thisblock->move1(xshift, yshift);
 
 
 			
-			//put the block in the new place
-				for(int i = 0; i < thisblock->getblockH(); i++)
-				{
-					for(int j = 0; j < thisblock->getblockW(); j++)
-					{
-						theGridd[make_pair( thisblock->getTopLeftX() + i , thisblock->getTopLeftY() + j )] = thisblock;
-					}
-				}
-				delete tempblock;//the temp block isn't needed anymore
+			// Write the block in the new place
+			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = thisblock;
+			delete tempblock;//the temp block isn't needed anymore
 			
 			
 		}
@@ -291,24 +246,12 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 			cout << "You can't move there!" << endl;
 			cout << endl;
 
-			for(int i = 0; i < thisblock->getblockH(); i++)	
-			{//put the block back where it belongs
-				for(int j = 0; j < thisblock->getblockW(); j++)
-				{
-					theGridd[make_pair(i + thisblock->getTopLeftX(), j + thisblock->getTopLeftY())] = thisblock;
-				}
-			}			
+			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = thisblock;		
 			delete tempblock;//the temp block isn't needed anymore
 		}
 		else if (cdetect == 3)
 		{
-			for(int i = 0; i < thisblock->getblockH(); i++)	
-			{//put the block back where it belongs
-				for(int j = 0; j < thisblock->getblockW(); j++)
-				{
-					theGridd[make_pair(i + thisblock->getTopLeftX(), j + thisblock->getTopLeftY())] = thisblock;
-				}
-			}			
+			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = thisblock;		
 			delete tempblock;//the temp block isn't needed anymore
 		}
 }
@@ -386,11 +329,11 @@ vector<string> Grid::scancount(int tplayer){
 	{
 		for(int j = 0; j < 9; j++)
 		{
-			if(theGridd[make_pair(i, j)] != NULL)
+			if(gameboard[i][j] != NULL)
 			{
-				if((theGridd[make_pair(i, j)])->getteam() == tplayer)
+				if((gameboard[i][j])->getteam() == tplayer)
 				{
-					tdisplays.push_back((theGridd[make_pair(i, j)])->getDisplay());
+					tdisplays.push_back((gameboard[i][j])->getDisplay());
 				}
 			}
 		}
