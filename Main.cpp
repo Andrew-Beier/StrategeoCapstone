@@ -61,7 +61,7 @@ int main()
 	bool customSetup = false;
 
 	// Create an instance of Gamepiece, b
-	Gamepiece* b;	
+	Gamepiece b;	
 
 	// Get and store Player's name
 	cout << "Please enter your name: " <<endl;
@@ -482,13 +482,13 @@ int main()
 			cout <<"Pick an Y Coordinate for a movable block:" << endl;
 			cin >> moveX;
 			
-			if(game->findcell(moveY,moveX) == NULL)
+			if(game->findcell(moveY,moveX).getType() == "TYPELESS")
 			{
 				cout << "That space is empty" << endl;
 				cout << "try again..." << endl;
 				moreMove = true;
 			}
-			else if((game->findcell(moveY,moveX))-> getteam() == 2)
+			else if((game->findcell(moveY,moveX)).getteam() == 2)
 			{
 				cout << "That is not your piece" << endl;
 				cout << "try again..." << endl;

@@ -11,7 +11,7 @@ Grid::Grid(int a, int b) {
 	gridH = 10;
 
 	// Create the gameboard - Creates a 2D array (10x10) of gamepiece's in each position
-	gameboard = new Gamepiece[10][10];
+	Gamepiece gameboard[10][10];
 
 
 	// for(int i = 0; i < gridW; i++)
@@ -36,9 +36,9 @@ void Grid::printGrid(){
 				
 				cout << "|";
 				
-				if(gameboard[j][i] != NULL )
+				if(gameboard[j][i].getType() != "TYPELESS" )
 				{
-					cout << gameboard[j][i]->getDisplay();
+					cout << gameboard[j][i].getDisplay();
 				}
 				else
 				{
@@ -74,7 +74,7 @@ int Grid::gettotal(){ // total number of blocks from creation of the grid
 	return blocklist.size();
 }	
 	
-Gamepiece* Grid::findcell(int x, int y){
+Gamepiece Grid::findcell(int x, int y){
 	return gameboard[x][y];
 }
 	
@@ -91,7 +91,7 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 			return 0;
 		}
 		// Is the board space that the user is trying to move to open?
-		else if(gameboard[thisblock->getTopLeftX][thisblock->getTopLeftY] == NULL)
+		else if(gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()].getType() == "TYPELESS")
 		{
 			return 1;
 		} 
@@ -100,7 +100,7 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 
 		}
 
-		if(gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] != NULL)
+		if(gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()].getType() != "TYPELESS")
 		{
 			if (!started)
 			{
@@ -125,13 +125,13 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 				case '1' :  
 					// both user and computer pieces are deleted
 					delete thisblock;
-					gameboard[target->getTopLeftX()][target->getTopLeftY()] = NULL;
+					gameboard[target->getTopLeftX()][target->getTopLeftY()].getType() == "TYPELESS";
 					delete target;
 					return 2;
 					break;  
 				case '2' :  
 					// Computer won
-					gameboard[target->getTopLeftX()][target->getTopLeftY()] = NULL;
+					gameboard[target->getTopLeftX()][target->getTopLeftY()].getType() == "TYPELESS";
 					delete target;
 					return 1;
 					break;  
@@ -146,7 +146,7 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 					break;  
 				case '5' :
 					// flag captured
-					gameboard[target->getTopLeftX()][target->getTopLeftY()] = NULL;
+					gameboard[target->getTopLeftX()][target->getTopLeftY()].getType() == "TYPELESS";
 					delete target;
 					winner = thisblock->getteam();
 					return 1;
@@ -176,7 +176,7 @@ bool Grid::addGamepiece(Gamepiece* thisblock) {
 	}
 }
 	
-void Grid::move(char direction, Gamepiece* thisblock) {
+void Grid::move(char direction, Gamepiece thisblock) {
 		int xshift = 0;
 		int yshift = 0;
 		
@@ -216,7 +216,7 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 	
 
 		// removes the block before checking for clear spaces by setting it's old location to null
-		gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = NULL;
+		gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()].getType() == "TYPELESS";
 			
 		
 		tempblock->move1(xshift, yshift);
@@ -224,7 +224,7 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 		int cdetect = seeopen(tempblock, 1);
 		if( cdetect == 1)
 		{
-			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = NULL;
+			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()].getType() == "TYPELESS";
 
 			// Applies movement changes to the correct block if the space is clear
 			thisblock->move1(xshift, yshift);
@@ -326,7 +326,7 @@ vector<string> Grid::scancount(int tplayer){
 	{
 		for(int j = 0; j < 9; j++)
 		{
-			if(gameboard[i][j] != NULL)
+			if(gameboard[i][j].getType() != "TYPELESS")
 			{
 				if((gameboard[i][j]).getteam() == tplayer)
 				{
