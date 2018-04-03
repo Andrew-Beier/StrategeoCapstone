@@ -27,6 +27,7 @@ class Gamepiece
 		
 	public:
 		Gamepiece(int , int , int , int , int ,string);
+		Gamepiece();
 		int getId();
 		string getType();
 		int getblockW();

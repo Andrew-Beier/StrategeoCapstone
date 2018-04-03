@@ -11,16 +11,16 @@ Grid::Grid(int a, int b) {
 	gridH = 10;
 
 	// Create the gameboard - Creates a 2D array (10x10) of gamepiece's in each position
-	gameboard = new Gamepiece[10][10];
+	gameboard = new Gamepiece**[10];
 
-
-	// for(int i = 0; i < gridW; i++)
-	// {
-	// 	for(int j = 0; j < gridH; j++)
-	// 	{
-	// 		theGridd[make_pair(i,j)] = NULL;
-	// 	}
-	// }
+	for(int i = 0; i < 10; i++)
+	{
+		gameboard[i] = new Gamepiece*[10];
+		for(int j = 0; j < gridH; j++)
+		{
+			gameboard[i][j] = NULL;
+		}
+	}
 }
 
 void Grid::printGrid(){
@@ -91,7 +91,7 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 			return 0;
 		}
 		// Is the board space that the user is trying to move to open?
-		else if(gameboard[thisblock->getTopLeftX][thisblock->getTopLeftY] == NULL)
+		else if(gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] == NULL)
 		{
 			return 1;
 		} 
@@ -328,9 +328,9 @@ vector<string> Grid::scancount(int tplayer){
 		{
 			if(gameboard[i][j] != NULL)
 			{
-				if((gameboard[i][j]).getteam() == tplayer)
+				if((gameboard[i][j])->getteam() == tplayer)
 				{
-					tdisplays.push_back((gameboard[i][j]).getDisplay());
+					tdisplays.push_back((gameboard[i][j])->getDisplay());
 				}
 			}
 		}
