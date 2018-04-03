@@ -21,7 +21,8 @@ using namespace std;
 class Grid
 {
    private:
-		Gamepiece gameboard[10][10];
+
+		Gamepiece*** gameboard;
 		vector<Gamepiece*> blocklist;
 		vector<string> tdisplays;
 		int gridW;
