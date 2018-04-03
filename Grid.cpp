@@ -81,12 +81,12 @@ Gamepiece* Grid::findcell(int x, int y){
 int Grid::seeopen(Gamepiece* thisblock, bool started){
 		
 		// Revisit This later for necessity
-		if(thisblock->getTopLeftX() < 0 || thisblock->getTopLeftY() < 0 || ( thisblock->getTopLeftY() + thisblock->getblockH() ) > gridH ||  ( thisblock->getTopLeftX() + thisblock->getblockW() )> gridW)
+		if(thisblock->getTopLeftX() < 0 || thisblock->getTopLeftY() < 0 || thisblock->getTopLeftY() > 10 || thisblock->getTopLeftX() > 10)
 		{//if the block goes past any edge of the grid
 			return 0;
 		}
 		// If the game hasn't started yet
-		else if(!started)
+		else if(started)
 		{
 			return 0;
 		}
@@ -102,7 +102,7 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 
 		if(gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] != NULL)
 		{
-			if (!started)
+			if (started)
 			{
 				return 0;
 			}

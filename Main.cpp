@@ -43,8 +43,8 @@ int main()
 	string  quitchoice, pname;
 	char blockType, direction;
 	// set up a 9x9 grid
-	int gridX = 9;
-	int gridY = 9;
+	int gridX = 10;
+	int gridY = 10;
 	// total # of game pieces
 	int numblocks = 54;
 	// set the physical size of a piece
@@ -72,6 +72,7 @@ int main()
 	cout << endl;
 	
 	// Create a new instance of a game Grid, given parameters gridY, gridX (size of grid)
+	// TODO - Remove parameters for Grid - > Already done in constructor
 	Grid* game = new Grid(gridY,gridX);
 	Cplayer* dumbplayer = new Cplayer(game);
 	
