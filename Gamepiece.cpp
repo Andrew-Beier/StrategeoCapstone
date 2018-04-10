@@ -7,12 +7,14 @@
 Gamepiece::Gamepiece(int a, int b, int c, int d, int thisID, string btype){
 	power= a;
 	team = b;
+	// c is the x coordinate
+	// d is the y coordinate
 	topleftX = c;
 	topleftY = d;
 	id = thisID;
 	blocktype = btype;
 	farsideX = c;
-	farsideY = d ;	
+	farsideY = d;	
 }
 
 Gamepiece::Gamepiece(){

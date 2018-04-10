@@ -25,33 +25,35 @@ Grid::Grid(int a, int b) {
 
 void Grid::printGrid(){
 	cout << endl;
-	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |" << endl;
+	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |" << endl;
 	cout << endl;
-	cout << "---   + - + - + - + - + - + - + - + - + - +   ---" << endl;
-		for(int j = 0; j < gridH; j++)
+	cout << "---   + - + - + - + - + - + - + - + - + - + - +   ---" << endl;
+		for(int i = 0; i < gridH; i++)
 		{
-			cout << " " << j << "    " ;
-			for(int i = 0; i < gridW; i++)
+			cout << " " << i << "    " ;
+			for(int j = 0; j < gridW; j++)
 			{
 				
 				cout << "|";
 				
 				if(gameboard[j][i] != NULL )
 				{
+					// Print the char that indicates the piece
 					cout << gameboard[j][i]->getDisplay();
 				}
 				else
 				{
+					// If there isn't a piece, print an empty space
 					cout << "   ";
 				}
 				
 			}
-			cout << "|    " << j << endl;
-			cout << "---   + - + - + - + - + - + - + - + - + - +   ---" << endl;
+			cout << "|    " << i << endl;
+			cout << "---   + - + - + - + - + - + - + - + - + - + - +   ---" << endl;
 			
 		}
 	cout << endl;
-	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |" << endl;
+	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |" << endl;
 }
 	
 int Grid::getNumREM(){
@@ -85,11 +87,6 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 		{//if the block goes past any edge of the grid
 			return 0;
 		}
-		// If the game hasn't started yet
-		else if(started)
-		{
-			return 0;
-		}
 		// Is the board space that the user is trying to move to open?
 		else if(gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] == NULL)
 		{
@@ -102,7 +99,7 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 
 		if(gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] != NULL)
 		{
-			if (started)
+			if (!started)
 			{
 				return 0;
 			}
