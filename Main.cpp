@@ -12,7 +12,6 @@
 #include "Grid.h"
 #include "Flag.h"
 #include "Bomb.h"
-#include "Cplayer.h"
 
 using namespace std;
 
@@ -74,7 +73,7 @@ int main()
 	// Create a new instance of a game Grid, given parameters gridY, gridX (size of grid)
 	// TODO - Remove parameters for Grid - > Already done in constructor
 	Grid* game = new Grid(gridY,gridX);
-	Cplayer* dumbplayer = new Cplayer(game);
+	game->addComputerPieces();
 	
 	// Feedback for UX
 	cout << "Printing the Game Board" << endl;
@@ -507,7 +506,7 @@ int main()
 			}	
 		if (game->findwinner() != 0)
 		{
-			cout << "PLYAER " <<  game->findwinner() << " WINS!" << endl;
+			cout << "PLAYER " <<  game->findwinner() << " WINS!" << endl;
 			moreMove = false;
 		}
 			

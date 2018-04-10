@@ -13,6 +13,8 @@
 #include <cstdlib> 
 #include <stdlib.h>
 #include "Gamepiece.h"
+#include "Flag.h"
+#include "Bomb.h"
 
 
 
@@ -29,6 +31,7 @@ class Grid
 		int numMOV;// blocks that can be moved
 		int numREM;// blocks that have to be removed
 		int winner;
+		int idcounter;
 		
 	public:
 		Grid(int, int);
@@ -44,6 +47,8 @@ class Grid
 		void move(char, Gamepiece*);
 		char battle(Gamepiece*,Gamepiece*);
 		int findwinner();
+		void takeComputerTurn();
+		void addComputerPieces();
 		vector<string> scancount(int);
 };
 
