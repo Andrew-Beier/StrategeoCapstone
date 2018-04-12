@@ -47,7 +47,7 @@ class Grid
 		void move(char, Gamepiece*);
 		char battle(Gamepiece*,Gamepiece*);
 		int findwinner();
-		void takeComputerTurn();
+		void takeComputerTurn(char, Gamepiece*);
 		void addComputerPieces();
 		vector<string> scancount(int);
 };

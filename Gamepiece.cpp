@@ -75,6 +75,7 @@ void Gamepiece::move1(int x, int y) {
 		
 	topleftY += y;
 	farsideY += y;
+	cout << "move1 fuction activated " << x << " , " << y << endl;
 }
 
 bool Gamepiece::canmove(){
