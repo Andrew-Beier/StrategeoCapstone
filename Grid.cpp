@@ -384,7 +384,7 @@ void Grid::addComputerPieces(){
 	}
 }
 
-void Grid::takeComputerTurn(char direction, Gamepiece* thisblock){
+void Grid::takeComputerTurn(){
 	cout << "Attempting to take a computer turn..." << endl;
 	// METHOD TO DETERMINE WHICH PIECE IS MOVING
 	int x = 3;
@@ -396,13 +396,12 @@ void Grid::takeComputerTurn(char direction, Gamepiece* thisblock){
 	{
 		cout << "That space is empty" << endl;
 		cout << "try again... Stupid computer" << endl;
-		moreMove = true;
 	}
 	else
 	{
 		// DETERMINE THE DIRECTION
-		game->move('2',b);
-		game->printGrid();
+		move('2',compPiece);
+		printGrid();
 		cout << "moved computer piece" << endl;
 	}
 

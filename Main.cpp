@@ -503,13 +503,6 @@ int main()
 
 				game->printGrid();
 				cout << endl;
-
-				if(game->findcell(3,2) == NULL)
-				{
-					cout << "That space is empty" << endl;
-					cout << "try again... Stupid computer" << endl;
-					moreMove = true;
-				}
 				game->takeComputerTurn();
 			}	
 		if (game->findwinner() != 0)
