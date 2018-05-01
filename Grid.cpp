@@ -380,10 +380,14 @@ void Grid::addComputerPieces(){
 	}
 }
 
+// Determine if the piece at a space belongs to the given player
 bool Grid::PieceExistsThere(int row, int col, int player){
+	cerr << "Near line 385 inside the PieceExistsThere Function, values are; Row:  " + to_string(row) + " Col: " + to_string(col) + " Player: " + to_string(player) << endl;
+	// If there is nothing there, it can't
 	if(gameboard[row][col] == NULL){
 		return false;
 	}
+	//
 	else if(gameboard[row][col]->getteam() == player){
 		return true;
 	}
@@ -394,25 +398,54 @@ bool Grid::PieceExistsThere(int row, int col, int player){
 
 
 int Grid::WithinAttackingRange(int row,int col) {
+	cerr << "Near line 401: inside the WithinAttackingRange Function, values are; Row:  " + to_string(row) + " Col: " + to_string(col) << endl;
+
 	//1:up, 2:down, 3:left, or 4:right
-	if(gameboard[row-1][col]->getteam() == 1){
-		return 1;
-	} else if(gameboard[row+1][col]->getteam() == 1) {
-		return 2;
-	} else if(gameboard[row][col-1]->getteam() == 1) {
-		return 3;
-	} else if(gameboard[row][col+1]->getteam() == 1){
-		return 4;
-	} else {
-		return 0;
+	if(!(row-1 < 0)){
+		cerr << "exit first if" << endl;
+		cerr << "Near line 405: row-1 is not less than 0, continuing to check if it's a user piece" << endl;
+		if(gameboard[row-1][col] != NULL && gameboard[row-1][col]->getteam() == 2){
+			cerr << "Line 405: Made it within return 3 option" << endl;
+			return 3;
+		}
 	}
+	if(!(row+1 > 9)) {
+		cerr << "exit 2nd if" << endl;
+		cerr << "Near line 414: row+1 is not higher than 9, continuing to check if it's a user piece" << endl;
+		if(gameboard[row+1][col] != NULL && gameboard[row+1][col]->getteam() == 2){
+			cerr << "Line 412: Made it within return 4 option" << endl;
+			return 4;
+		}
+	}
+	if(!(col - 1 < 0)) {
+		cerr << "exit third if" << endl;
+		cerr << "Near line 405: col-1 is not less than 0, continuing to check if it's a user piece" << endl;
+
+		if(gameboard[row][col-1] != NULL && gameboard[row][col-1]->getteam() == 2){
+
+			cerr << "Line 417: Made it within return 1 option" << endl;
+			return 2;
+		}
+	}
+	if(!(col+1 > 9)){
+		cerr << "exit 4th if" << endl;
+		cerr << "Near line 405: col+1 is not higher than 9, continuing to check if it's a user piece" << endl;
+		if(gameboard[row][col+1] != NULL && gameboard[row][col+1]->getteam() == 2){
+			cerr << "Line 422: Made it within return 2 option" << endl;
+			return 1;
+		}
+	}
+
+	cerr << "Line 420: Made it within return 0 option" << endl;
+	return 0;
 }
 
 void Grid::takeComputerTurn(){
-	cout << "Attempting to take a computer turn..." << endl;
+	cerr << " Near line 418: Attempting to take a computer turn..." << endl;
 
 	int playerTotal = 0;
 	// Absolute Max player Value for the turn prior to any moves
+	cerr << "Near line 422: Calculating total value of playerTotal" << endl;
 	for(int row = 0; row < 10; row++){
 		for(int col = 0; col < 10; col++){
 			// 1 in paramter = is users piece
@@ -421,55 +454,116 @@ void Grid::takeComputerTurn(){
 			}
 		}
 	}
+	cerr << "Near line 430: Determined the max value, it is: " + to_string(playerTotal) << endl;
 	vector<int> allVals;
 	// Assign Values to spaces with a move happening
 	for(int row = 0; row < 10; row++) {
 		for (int col = 0; col < 10; col++) {
 			if (PieceExistsThere(row, col, 1)) {
+				cerr << "Near Line 437: Determiend that a user piece is there" << endl;
 				possMoveWeights[row][col] = playerTotal - gameboard[row][col]->getpower();
+				cerr << "Near Line 439: Value adding to the allVals vector is: " + to_string(possMoveWeights[row][col]) << endl;
 				allVals.push_back(possMoveWeights[row][col]);
 				// If the computer has a piece there
 			} else if (PieceExistsThere(row, col, 2)) {
+				cerr << "Near Line 443: Determiend that a computer piece is there" << endl;
+
 				possMoveWeights[row][col] = 1000;
 				allVals.push_back(possMoveWeights[row][col]);
+				cerr << "Near Line 445: Value adding to the allVals vector is: 1000 " << endl;
 				// Space is Empty
 			} else {
+				cerr << "Near Line 450: Determined that there is not a  piece there" << endl;
 				possMoveWeights[row][col] = playerTotal;
+				cerr << "Near line 452: Weight being added is: " + to_string(possMoveWeights[row][col]) << endl;
 				allVals.push_back(possMoveWeights[row][col]);
 			}
 		}
 	}
+	// Print the grid
+	cerr << "Near Line 458: Printing Grid" << endl;
+	cout << endl;
+	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |" << endl;
+	cout << endl;
+	cout << "---   + - + - + - + - + - + - + - + - + - + - +   ---" << endl;
+	for(int row = 0; row < 10; row++){
+		cout << " " << row << "    " ;
+		for(int col = 0; col <10; col++){
+			cout << "|";
+
+			// Print the char that indicates the piece
+			cout << possMoveWeights[row][col];
+
+		}
+				cout << "|    " << row << endl;
+				cout << "---   + - + - + - + - + - + - + - + - + - + - +   ---" << endl;
+
+	}
+	cout << endl;
+	cout << "      | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |" << endl;
+
+	cerr << " Near Line 449: Made it past the loop that assigns values to the allVals Vector" << endl;
 	// Copy the values to a new vector
 	vector<int> sortedVals;
 	for(int i = 0; i < allVals.size(); i++) {
 		sortedVals.push_back(allVals[i]);
 	}
+	cerr << " Near line 455: Made it past the loop that copies values from the allVals Vector to the sortedVals" << endl;
+
 	sort(sortedVals.begin(),sortedVals.end());
+	cerr << "Near line 458: Made it past the function that sorts values in the sortedVals Vector" << endl;
 
 	// Find the lowest values on the board with an enemy piece next to it and move that computer piece to the space
 	for(int lowestPossValueIndex = 0; lowestPossValueIndex < 100; lowestPossValueIndex++) {
+		cerr << "Near Line 462: Inside the lowestPossValueIndex for loop" << endl;
+		cerr << "Near line 463: Current value for lowestPossValueIndex is: " + to_string(lowestPossValueIndex) << endl;
+
 		for (int row = 0; row < 10; row++) {
 			for (int col = 0; col < 10; col++) {
 				if ((possMoveWeights[row][col] = sortedVals[lowestPossValueIndex])) {
+					cerr << "Near line 468: The value at the possMoveWeights[row][col] is equal to the lowest value in sortedVals: " + to_string(sortedVals[lowestPossValueIndex]) << endl;
 					int attackOption = WithinAttackingRange(row,col);
+					cerr << "near line 470: attackOption was just returned, it is: " + to_string(attackOption) << endl;
 					if (attackOption > 0) {
+						cerr << "near line 472: attackOption is greater than 0" << endl;
+
 						if(attackOption == 1) {
-							Gamepiece* compPiece = findcell(row,col);
-							move('1',compPiece);
-						} else if (attackOption == 2) {
-							Gamepiece* compPiece = findcell(row,col);
+							cerr << "near line 475: attackOption is 1" << endl;
+							Gamepiece* compPiece = findcell(row+1,col);
+							cerr << "near line 477: assigned a Gampiece pointer named compPiece" << endl;
+							cerr << "near line 478: Attempting to move piece upwards..." << endl;
 							move('2',compPiece);
+							cerr << " near line 480: piece was moved upwards" << endl;
+						} else if (attackOption == 2) {
+							cerr << "near line 482: attackOption is 2" << endl;
+
+							Gamepiece* compPiece = findcell(row-1,col);
+							cerr << "near line 485: assigned a Gampiece pointer named compPiece" << endl;
+							cerr << "near line 486: Attempting to move piece down..." << endl;
+							move('1',compPiece);
+							cerr << "near line 488: piece was moved down" << endl;
 						} else if(attackOption == 3) {
-							Gamepiece* compPiece = findcell(row,col);
-							move('3',compPiece);
-						} else {
-							Gamepiece* compPiece = findcell(row,col);
+							cerr << "near line 490: attackOption is 3" << endl;
+
+							Gamepiece* compPiece = findcell(row,col-1);
+							cerr << "near line 493: assigned a Gampiece pointer named compPiece" << endl;
+							cerr << "near line 494: Attempting to move piece left..." << endl;
 							move('4',compPiece);
+							cerr << "near line 496: piece was moved left" << endl;
+						} else {
+							cerr << "near line 498: attackOption should be 4, it is: " + to_string(attackOption) << endl;
+							Gamepiece* compPiece = findcell(row,col+1);
+							cerr << "near line 500: assigned a Gampiece pointer named compPiece" << endl;
+							cerr << "near line 501: Attempting to move piece right..." << endl;
+							move('3g',compPiece);
+							cerr << "near line 503: piece was moved right" << endl;
 						}
 					} else {
+						cerr << "near line 506: There were no possible moves towards this space" << endl;
 						continue;
 					}
 				} else {
+					cerr << "near line 510: This spot is not the current lowest value being looked at" << endl;
 					continue;
 				}
 			}
