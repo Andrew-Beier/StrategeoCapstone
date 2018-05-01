@@ -32,6 +32,7 @@ class Grid
 		int numREM;// blocks that have to be removed
 		int winner;
 		int idcounter;
+		int possMoveWeights[10][10];
 		
 	public:
 		Grid(int, int);
@@ -50,6 +51,8 @@ class Grid
 		void takeComputerTurn();
 		void addComputerPieces();
 		vector<string> scancount(int);
+		bool PieceExistsThere(int row, int col, int player);
+		int WithinAttackingRange(int row,int col);
 };
 
 

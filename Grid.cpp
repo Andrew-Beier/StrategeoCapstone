@@ -160,7 +160,7 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 				return 1;
 			}
 		}
-return 1;
+	return 1;
 }
 
 bool Grid::addGamepiece(Gamepiece* thisblock) {
@@ -216,11 +216,9 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 		//create a temp block to hold data while moving
 		Gamepiece* tempblock = new Gamepiece(thisblock -> getpower(), thisblock -> getteam(), thisblock -> getTopLeftX(), thisblock -> getTopLeftY(), thisblock -> getId(), thisblock -> getType());
 	
-
 		// removes the block before checking for clear spaces by setting it's old location to null
 		gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = NULL;
 			
-		
 		tempblock->move1(xshift, yshift);
 		//checks to see if anything would be in the way
 		int cdetect = seeopen(tempblock, 1);
@@ -231,8 +229,6 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 			// Applies movement changes to the correct block if the space is clear
 			thisblock->move1(xshift, yshift);
 
-
-			
 			// Write the block in the new place
 			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = thisblock;
 			delete tempblock;//the temp block isn't needed anymore
@@ -384,247 +380,153 @@ void Grid::addComputerPieces(){
 	}
 }
 
+bool Grid::PieceExistsThere(int row, int col, int player){
+	if(gameboard[row][col] == NULL){
+		return false;
+	}
+	else if(gameboard[row][col]->getteam() == player){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+
+int Grid::WithinAttackingRange(int row,int col) {
+	//1:up, 2:down, 3:left, or 4:right
+	if(gameboard[row-1][col]->getteam() == 1){
+		return 1;
+	} else if(gameboard[row+1][col]->getteam() == 1) {
+		return 2;
+	} else if(gameboard[row][col-1]->getteam() == 1) {
+		return 3;
+	} else if(gameboard[row][col+1]->getteam() == 1){
+		return 4;
+	} else {
+		return 0;
+	}
+}
+
 void Grid::takeComputerTurn(){
 	cout << "Attempting to take a computer turn..." << endl;
-	// METHOD TO DETERMINE WHICH PIECE IS MOVING
-	int x = 3;
-	int y = 2;
-	Gamepiece* compPiece = findcell(x,y);
 
-	// PASS THE MOVING PIECE IN HERE
-	if(compPiece == NULL)
-	{
-		cout << "That space is empty" << endl;
-		cout << "try again... Stupid computer" << endl;
+	int playerTotal = 0;
+	// Absolute Max player Value for the turn prior to any moves
+	for(int row = 0; row < 10; row++){
+		for(int col = 0; col < 10; col++){
+			// 1 in paramter = is users piece
+			if(PieceExistsThere(row,col,1)){
+				playerTotal += gameboard[row][col]->getpower();
+			}
+		}
 	}
-	else
-	{
-		// DETERMINE THE DIRECTION
-		move('2',compPiece);
-		printGrid();
-		cout << "moved computer piece" << endl;
+	vector<int> allVals;
+	// Assign Values to spaces with a move happening
+	for(int row = 0; row < 10; row++) {
+		for (int col = 0; col < 10; col++) {
+			if (PieceExistsThere(row, col, 1)) {
+				possMoveWeights[row][col] = playerTotal - gameboard[row][col]->getpower();
+				allVals.push_back(possMoveWeights[row][col]);
+				// If the computer has a piece there
+			} else if (PieceExistsThere(row, col, 2)) {
+				possMoveWeights[row][col] = 1000;
+				allVals.push_back(possMoveWeights[row][col]);
+				// Space is Empty
+			} else {
+				possMoveWeights[row][col] = playerTotal;
+				allVals.push_back(possMoveWeights[row][col]);
+			}
+		}
+	}
+	// Copy the values to a new vector
+	vector<int> sortedVals;
+	for(int i = 0; i < allVals.size(); i++) {
+		sortedVals.push_back(allVals[i]);
+	}
+	sort(sortedVals.begin(),sortedVals.end());
+
+	// Find the lowest values on the board with an enemy piece next to it and move that computer piece to the space
+	for(int lowestPossValueIndex = 0; lowestPossValueIndex < 100; lowestPossValueIndex++) {
+		for (int row = 0; row < 10; row++) {
+			for (int col = 0; col < 10; col++) {
+				if ((possMoveWeights[row][col] = sortedVals[lowestPossValueIndex])) {
+					int attackOption = WithinAttackingRange(row,col);
+					if (attackOption > 0) {
+						if(attackOption == 1) {
+							Gamepiece* compPiece = findcell(row,col);
+							move('1',compPiece);
+						} else if (attackOption == 2) {
+							Gamepiece* compPiece = findcell(row,col);
+							move('2',compPiece);
+						} else if(attackOption == 3) {
+							Gamepiece* compPiece = findcell(row,col);
+							move('3',compPiece);
+						} else {
+							Gamepiece* compPiece = findcell(row,col);
+							move('4',compPiece);
+						}
+					} else {
+						continue;
+					}
+				} else {
+					continue;
+				}
+			}
+		}
 	}
 
-// // C++ program to find the next optimal move for
-// // a player
 
-// struct Move
-// {
-//     int row, col;
-// };
-
-// char player = 'x', opponent = 'o';
- 
-// // This function returns true if there are moves
-// // remaining on the board. It returns false if
-// // there are no moves left to play.
-// bool isMovesLeft(char board[3][3])
-// {
-//     for (int i = 0; i<3; i++)
-//         for (int j = 0; j<3; j++)
-//             if (board[i][j]=='_')
-//                 return true;
-//     return false;
-// }
- 
-// // This is the evaluation function as discussed
-// // in the previous article ( http://goo.gl/sJgv68 )
-// int evaluate(char b[3][3])
-// {
-//     // Checking for Rows for X or O victory.
-//     for (int row = 0; row<3; row++)
-//     {
-//         if (b[row][0]==b[row][1] &&
-//             b[row][1]==b[row][2])
-//         {
-//             if (b[row][0]==player)
-//                 return +10;
-//             else if (b[row][0]==opponent)
-//                 return -10;
-//         }
-//     }
- 
-//     // Checking for Columns for X or O victory.
-//     for (int col = 0; col<3; col++)
-//     {
-//         if (b[0][col]==b[1][col] &&
-//             b[1][col]==b[2][col])
-//         {
-//             if (b[0][col]==player)
-//                 return +10;
- 
-//             else if (b[0][col]==opponent)
-//                 return -10;
-//         }
-//     }
- 
-//     // Checking for Diagonals for X or O victory.
-//     if (b[0][0]==b[1][1] && b[1][1]==b[2][2])
-//     {
-//         if (b[0][0]==player)
-//             return +10;
-//         else if (b[0][0]==opponent)
-//             return -10;
-//     }
- 
-//     if (b[0][2]==b[1][1] && b[1][1]==b[2][0])
-//     {
-//         if (b[0][2]==player)
-//             return +10;
-//         else if (b[0][2]==opponent)
-//             return -10;
-//     }
- 
-//     // Else if none of them have won then return 0
-//     return 0;
-// }
- 
-// // This is the minimax function. It considers all
-// // the possible ways the game can go and returns
-// // the value of the board
-// int minimax(char board[3][3], int depth, bool isMax)
-// {
-//     int score = evaluate(board);
- 
-//     // If Maximizer has won the game return his/her
-//     // evaluated score
-//     if (score == 10)
-//         return score;
- 
-//     // If Minimizer has won the game return his/her
-//     // evaluated score
-//     if (score == -10)
-//         return score;
- 
-//     // If there are no more moves and no winner then
-//     // it is a tie
-//     if (isMovesLeft(board)==false)
-//         return 0;
- 
-//     // If this maximizer's move
-//     if (isMax)
-//     {
-//         int best = -1000;
- 
-//         // Traverse all cells
-//         for (int i = 0; i<3; i++)
-//         {
-//             for (int j = 0; j<3; j++)
-//             {
-//                 // Check if cell is empty
-//                 if (board[i][j]=='_')
-//                 {
-//                     // Make the move
-//                     board[i][j] = player;
- 
-//                     // Call minimax recursively and choose
-//                     // the maximum value
-//                     best = max( best,
-//                         minimax(board, depth+1, !isMax) );
- 
-//                     // Undo the move
-//                     board[i][j] = '_';
-//                 }
-//             }
-//         }
-//         return best;
-//     }
- 
-//     // If this minimizer's move
-//     else
-//     {
-//         int best = 1000;
- 
-//         // Traverse all cells
-//         for (int i = 0; i<3; i++)
-//         {
-//             for (int j = 0; j<3; j++)
-//             {
-//                 // Check if cell is empty
-//                 if (board[i][j]=='_')
-//                 {
-//                     // Make the move
-//                     board[i][j] = opponent;
- 
-//                     // Call minimax recursively and choose
-//                     // the minimum value
-//                     best = min(best,
-//                            minimax(board, depth+1, !isMax));
- 
-//                     // Undo the move
-//                     board[i][j] = '_';
-//                 }
-//             }
-//         }
-//         return best;
-//     }
-// }
- 
-// // This will return the best possible move for the player
-// Move findBestMove(char board[3][3])
-// {
-//     int bestVal = -1000;
-//     Move bestMove;
-//     bestMove.row = -1;
-//     bestMove.col = -1;
- 
-//     // Traverse all cells, evalutae minimax function for
-//     // all empty cells. And return the cell with optimal
-//     // value.
-//     for (int i = 0; i<3; i++)
-//     {
-//         for (int j = 0; j<3; j++)
-//         {
-//             // Check if celll is empty
-//             if (board[i][j]=='_')
-//             {
-//                 // Make the move
-//                 board[i][j] = player;
- 
-//                 // compute evaluation function for this
-//                 // move.
-//                 int moveVal = minimax(board, 0, false);
- 
-//                 // Undo the move
-//                 board[i][j] = '_';
- 
-//                 // If the value of the current move is
-//                 // more than the best value, then update
-//                 // best/
-//                 if (moveVal > bestVal)
-//                 {
-//                     bestMove.row = i;
-//                     bestMove.col = j;
-//                     bestVal = moveVal;
-//                 }
-//             }
-//         }
-//     }
- 
-//     printf("The value of the best Move is : %dnn",
-//             bestVal);
- 
-//     return bestMove;
-// }
- 
-// // Driver code
-// int main()
-// {
-//     char board[3][3] =
-//     {
-//         { 'x', 'o', 'x' },
-//         { 'o', 'o', 'x' },
-//         { '_', '_', '_' }
-//     };
- 
-//     Move bestMove = findBestMove(board);
- 
-//     printf("The Optimal Move is :n");
-//     printf("ROW: %d COL: %dnn", bestMove.row,
-//                                   bestMove.col );
-//     return 0;
-// }
+//			if(pieceExistsThere(row,col,2)){
+//				// dir 1 is up; 2 is down; 3 is left; 4 is right
+//				for(int dir = 1; dir < 5; dir++){
+//					if(dir == 1){
+//						// direction is up
+//						if(!(row - 1 < 0)){
+//							possMoveWeights[row][col][dir] = 10000;
+//						}
+//						else if (pieceExistsThere(row-1,col,1)){
+//							possMoveWeights[row][col][dir] = playerTotal - (gameboard[row-1][col].getpower());
+//						}
+//					} else if (dir == 2){
+//						// direction is down
+//						if(!(row + 1 > 10)){
+//							possMoveWeights[row][col][dir] = 10000;
+//						}
+//						else if(pieceExistsThere(row+1,col,1)){
+//							possMoveWeights[row][col][dir] = playerTotal - (gameboard[row-1][col].getpower());
+//						}
+//					} else if (dir == 3){
+//						// direction is left
+//						if(!(col - 1 < 0)){
+//							possMoveWeights[row][col][dir] = 10000;
+//						}
+//						else if(pieceExistsThere(row,col-1,1)){
+//							possMoveWeights[row][col][dir] = playerTotal - (gameboard[row-1][col].getpower());
+//						}
+//					} else {
+//						// dir == 4 direction is right
+//						if(!(col + 1 > 10)){
+//							possMoveWeights[row][col][dir] = 10000;
+//						}
+//						else if(pieceExistsThere(row,col+1,1)){
+//							possMoveWeights[row][col][dir] = playerTotal - (gameboard[row-1][col].getpower());
+//						}
+//					}
+//				}
+//			}
+//			else {
+//				// There isn't a piece there so every weight is high
+//				for(int dir = 0; dir < 4; dir++){
+//					possMoveWeights[row][col][dir] = 10000;
+//				}
+//			}
 }
+
+
+
+
+
 
 vector<string> Grid::scancount(int tplayer){
 	tdisplays.clear();

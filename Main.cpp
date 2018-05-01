@@ -18,14 +18,11 @@ using namespace std;
 // For development - Currently setup to auto create the grid in a typical order
 
 // TODO
-// Convert map/vector into a 2D array
-	// Primary changes are in Grid.cpp & Grid.H
 
-// Make grid fullsize -- will need to fix the print function with this
 
 // Add Remaining pieces movement
 
-// Write funcitonal logic for the computer to be able to play with a human player
+// Write functional logic for the computer to be able to play with a human player
 	// Add troubleshooting option to reveal location of pieces
 	
 // Expand on the above through learning
