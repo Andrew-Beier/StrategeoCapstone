@@ -179,6 +179,8 @@ bool Grid::addGamepiece(Gamepiece* thisblock) {
 }
 	
 void Grid::move(char direction, Gamepiece* thisblock) {
+	cerr << "Made it to the move function; values are... Direction: " + to_string(direction) + " block type: " << endl;
+	cerr << thisblock->getType() << endl;
 		int xshift = 0;
 		int yshift = 0;
 		
@@ -402,37 +404,33 @@ int Grid::WithinAttackingRange(int row,int col) {
 
 	//1:up, 2:down, 3:left, or 4:right
 	if(!(row-1 < 0)){
-		cerr << "exit first if" << endl;
 		cerr << "Near line 405: row-1 is not less than 0, continuing to check if it's a user piece" << endl;
 		if(gameboard[row-1][col] != NULL && gameboard[row-1][col]->getteam() == 2){
 			cerr << "Line 405: Made it within return 3 option" << endl;
-			return 3;
+			return 1;
 		}
 	}
 	if(!(row+1 > 9)) {
-		cerr << "exit 2nd if" << endl;
 		cerr << "Near line 414: row+1 is not higher than 9, continuing to check if it's a user piece" << endl;
 		if(gameboard[row+1][col] != NULL && gameboard[row+1][col]->getteam() == 2){
 			cerr << "Line 412: Made it within return 4 option" << endl;
-			return 4;
+			return 2;
 		}
 	}
 	if(!(col - 1 < 0)) {
-		cerr << "exit third if" << endl;
 		cerr << "Near line 405: col-1 is not less than 0, continuing to check if it's a user piece" << endl;
 
 		if(gameboard[row][col-1] != NULL && gameboard[row][col-1]->getteam() == 2){
 
 			cerr << "Line 417: Made it within return 1 option" << endl;
-			return 2;
+			return 4;
 		}
 	}
 	if(!(col+1 > 9)){
-		cerr << "exit 4th if" << endl;
 		cerr << "Near line 405: col+1 is not higher than 9, continuing to check if it's a user piece" << endl;
 		if(gameboard[row][col+1] != NULL && gameboard[row][col+1]->getteam() == 2){
 			cerr << "Line 422: Made it within return 2 option" << endl;
-			return 1;
+			return 3;
 		}
 	}
 
@@ -461,22 +459,22 @@ void Grid::takeComputerTurn(){
 		for (int col = 0; col < 10; col++) {
 			if (PieceExistsThere(row, col, 1)) {
 				cerr << "Near Line 437: Determiend that a user piece is there" << endl;
-				possMoveWeights[row][col] = playerTotal - gameboard[row][col]->getpower();
+				possMoveWeights[col][row] = playerTotal - gameboard[row][col]->getpower();
 				cerr << "Near Line 439: Value adding to the allVals vector is: " + to_string(possMoveWeights[row][col]) << endl;
-				allVals.push_back(possMoveWeights[row][col]);
+				allVals.push_back(possMoveWeights[col][row]);
 				// If the computer has a piece there
 			} else if (PieceExistsThere(row, col, 2)) {
 				cerr << "Near Line 443: Determiend that a computer piece is there" << endl;
 
-				possMoveWeights[row][col] = 1000;
-				allVals.push_back(possMoveWeights[row][col]);
+				possMoveWeights[col][row] = 1000;
+				allVals.push_back(possMoveWeights[col][row]);
 				cerr << "Near Line 445: Value adding to the allVals vector is: 1000 " << endl;
 				// Space is Empty
 			} else {
 				cerr << "Near Line 450: Determined that there is not a  piece there" << endl;
-				possMoveWeights[row][col] = playerTotal;
+				possMoveWeights[col][row] = playerTotal;
 				cerr << "Near line 452: Weight being added is: " + to_string(possMoveWeights[row][col]) << endl;
-				allVals.push_back(possMoveWeights[row][col]);
+				allVals.push_back(possMoveWeights[col][row]);
 			}
 		}
 	}
@@ -520,42 +518,42 @@ void Grid::takeComputerTurn(){
 
 		for (int row = 0; row < 10; row++) {
 			for (int col = 0; col < 10; col++) {
-				if ((possMoveWeights[row][col] = sortedVals[lowestPossValueIndex])) {
+				if (possMoveWeights[row][col] == sortedVals[lowestPossValueIndex]) {
 					cerr << "Near line 468: The value at the possMoveWeights[row][col] is equal to the lowest value in sortedVals: " + to_string(sortedVals[lowestPossValueIndex]) << endl;
 					int attackOption = WithinAttackingRange(row,col);
 					cerr << "near line 470: attackOption was just returned, it is: " + to_string(attackOption) << endl;
 					if (attackOption > 0) {
 						cerr << "near line 472: attackOption is greater than 0" << endl;
 
-						if(attackOption == 1) {
+						if(attackOption == 2) {
 							cerr << "near line 475: attackOption is 1" << endl;
 							Gamepiece* compPiece = findcell(row+1,col);
 							cerr << "near line 477: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 478: Attempting to move piece upwards..." << endl;
-							move('2',compPiece);
+							move('1',compPiece);
 							cerr << " near line 480: piece was moved upwards" << endl;
-						} else if (attackOption == 2) {
+						} else if (attackOption == 1) {
 							cerr << "near line 482: attackOption is 2" << endl;
 
 							Gamepiece* compPiece = findcell(row-1,col);
 							cerr << "near line 485: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 486: Attempting to move piece down..." << endl;
-							move('1',compPiece);
+							move('2',compPiece);
 							cerr << "near line 488: piece was moved down" << endl;
-						} else if(attackOption == 3) {
+						} else if(attackOption == 4) {
 							cerr << "near line 490: attackOption is 3" << endl;
 
 							Gamepiece* compPiece = findcell(row,col-1);
 							cerr << "near line 493: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 494: Attempting to move piece left..." << endl;
-							move('4',compPiece);
+							move('3',compPiece);
 							cerr << "near line 496: piece was moved left" << endl;
 						} else {
 							cerr << "near line 498: attackOption should be 4, it is: " + to_string(attackOption) << endl;
 							Gamepiece* compPiece = findcell(row,col+1);
 							cerr << "near line 500: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 501: Attempting to move piece right..." << endl;
-							move('3g',compPiece);
+							move('4',compPiece);
 							cerr << "near line 503: piece was moved right" << endl;
 						}
 					} else {
