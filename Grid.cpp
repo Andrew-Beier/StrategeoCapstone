@@ -178,7 +178,7 @@ bool Grid::addGamepiece(Gamepiece* thisblock) {
 	}
 }
 	
-void Grid::move(char direction, Gamepiece* thisblock) {
+bool Grid::move(char direction, Gamepiece* thisblock) {
 	cerr << "Made it to the move function; values are... Direction: " + to_string(direction) + " block type: " << endl;
 	cerr << thisblock->getType() << endl;
 		int xshift = 0;
@@ -189,7 +189,7 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 			cout << "This Piece is IMMOVABLE" << endl;
 			cout << "try again..." << endl;
 			cout << endl;
-			return;
+			return false;
 		}
 		
 		switch ( direction )  //alter shift values to reflect the direction 
@@ -245,12 +245,15 @@ void Grid::move(char direction, Gamepiece* thisblock) {
 
 			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = thisblock;		
 			delete tempblock;//the temp block isn't needed anymore
+			return false;
 		}
 		else if (cdetect == 3)
 		{
 			gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] = thisblock;		
 			delete tempblock;//the temp block isn't needed anymore
+			return true;
 		}
+	return true;
 }
 	
 char Grid::battle(Gamepiece* attacker, Gamepiece* defender){
@@ -458,10 +461,15 @@ void Grid::takeComputerTurn(){
 	for(int row = 0; row < 10; row++) {
 		for (int col = 0; col < 10; col++) {
 			if (PieceExistsThere(row, col, 1)) {
-				cerr << "Near Line 437: Determiend that a user piece is there" << endl;
-				possMoveWeights[col][row] = playerTotal - gameboard[row][col]->getpower();
-				cerr << "Near Line 439: Value adding to the allVals vector is: " + to_string(possMoveWeights[row][col]) << endl;
-				allVals.push_back(possMoveWeights[col][row]);
+				if(WithinAttackingRange(row, col)){
+					cerr << "Near Line 437: Determiend that a user piece is there" << endl;
+					possMoveWeights[col][row] = playerTotal - gameboard[row][col]->getpower();
+					cerr << "Near Line 439: Value adding to the allVals vector is: " + to_string(possMoveWeights[row][col]) << endl;
+					allVals.push_back(possMoveWeights[col][row]);
+				}
+				else{
+					possMoveWeights[col][row] = 1000;
+				}
 				// If the computer has a piece there
 			} else if (PieceExistsThere(row, col, 2)) {
 				cerr << "Near Line 443: Determiend that a computer piece is there" << endl;
@@ -530,7 +538,9 @@ void Grid::takeComputerTurn(){
 							Gamepiece* compPiece = findcell(row+1,col);
 							cerr << "near line 477: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 478: Attempting to move piece upwards..." << endl;
-							move('1',compPiece);
+							if(move('1',compPiece)){
+								return;
+							}
 							cerr << " near line 480: piece was moved upwards" << endl;
 						} else if (attackOption == 1) {
 							cerr << "near line 482: attackOption is 2" << endl;
@@ -538,7 +548,9 @@ void Grid::takeComputerTurn(){
 							Gamepiece* compPiece = findcell(row-1,col);
 							cerr << "near line 485: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 486: Attempting to move piece down..." << endl;
-							move('2',compPiece);
+							if(move('2',compPiece)){
+								return;
+							}
 							cerr << "near line 488: piece was moved down" << endl;
 						} else if(attackOption == 4) {
 							cerr << "near line 490: attackOption is 3" << endl;
@@ -546,14 +558,18 @@ void Grid::takeComputerTurn(){
 							Gamepiece* compPiece = findcell(row,col-1);
 							cerr << "near line 493: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 494: Attempting to move piece left..." << endl;
-							move('3',compPiece);
+							if(move('3',compPiece)){
+								return;
+							}
 							cerr << "near line 496: piece was moved left" << endl;
 						} else {
 							cerr << "near line 498: attackOption should be 4, it is: " + to_string(attackOption) << endl;
 							Gamepiece* compPiece = findcell(row,col+1);
 							cerr << "near line 500: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 501: Attempting to move piece right..." << endl;
-							move('4',compPiece);
+							if(move('4',compPiece)){
+								return;
+							}
 							cerr << "near line 503: piece was moved right" << endl;
 						}
 					} else {

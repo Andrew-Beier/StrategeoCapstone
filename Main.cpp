@@ -468,22 +468,21 @@ int main()
 
 	while(moreMove)
 	{
-			// this will be changed to an array
-			vector<string> pvec = game->scancount(1);//could be used for more, but the other features are not helpfull
-			cout << pname << " it is your turn." << endl;
-			cout << "You have " << pvec.size() << " pieces under your command" << endl;
+		// this will be changed to an array
+		vector<string> pvec = game->scancount(1);//could be used for more, but the other features are not helpfull
+		cout << pname << " it is your turn." << endl;
+		cout << "You have " << pvec.size() << " pieces under your command" << endl;
 			
-			cout << "Pick a X coordinate for a movable block:" << endl;
-			cin >> moveY;
+		cout << "Pick a X coordinate for a movable block:" << endl;
+		cin >> moveY;
 	
-			cout <<"Pick an Y Coordinate for a movable block:" << endl;
-			cin >> moveX;
-			
+		cout <<"Pick an Y Coordinate for a movable block:" << endl;
+		cin >> moveX;
+		
 			if(game->findcell(moveY,moveX) == NULL)
 			{
 				cout << "That space is empty" << endl;
 				cout << "try again..." << endl;
-				moreMove = true;
 			}
 			else if((game->findcell(moveY,moveX))-> getteam() == 2)
 			{
@@ -496,12 +495,17 @@ int main()
 				cin >> direction;
 			
 				b = game->findcell(moveY,moveX);
-				game->move(direction,b);
-
-				game->printGrid();
-				cout << endl;
-				game->takeComputerTurn();
+				if(game->move(direction,b))
+				{
+					game->printGrid();
+					cout << endl;
+					game->takeComputerTurn();
+				}		
+				
 			}	
+			
+			game->printGrid();
+			
 		if (game->findwinner() != 0)
 		{
 			cout << "PLAYER " <<  game->findwinner() << " WINS!" << endl;

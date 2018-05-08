@@ -46,7 +46,7 @@ class Grid
 		Gamepiece* findcell(int x, int y);
 		int seeopen(Gamepiece*, bool);
 		bool addGamepiece(Gamepiece* );
-		void move(char, Gamepiece*);
+		bool move(char, Gamepiece*);
 		char battle(Gamepiece*,Gamepiece*);
 		int findwinner();
 		void takeComputerTurn();
