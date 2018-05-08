@@ -87,7 +87,7 @@ bool Gamepiece::canattack(){
 }
 
 string Gamepiece::getDisplay(){
-	if (team == 2)
+	if (0)//CHANGE BACK TO (team == 2)
 	{
 		return " # ";
 	}
