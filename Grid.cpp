@@ -112,7 +112,7 @@ int Grid::seeopen(Gamepiece* thisblock, bool started){
 
 			// Computer cannot currently play because this checks to ensure it's the user
 			// 1 is user, 0 is computer - if it's your piece at that position you cannot move there, else battle
-			if(target->getteam() == 1)
+			if(target->getteam() == thisblock->getteam())
 			{
 				cout << "INVALID PIECE COLLISION" << endl;
 				return 0;
