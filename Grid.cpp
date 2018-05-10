@@ -468,15 +468,15 @@ void Grid::takeComputerTurn(){
 					allVals.push_back(possMoveWeights[col][row]);
 				}
 				else{
-					possMoveWeights[col][row] = 1000;
+					possMoveWeights[col][row] = 999;
 				}
 				// If the computer has a piece there
 			} else if (PieceExistsThere(row, col, 2)) {
 				cerr << "Near Line 443: Determiend that a computer piece is there" << endl;
 
-				possMoveWeights[col][row] = 1000;
+				possMoveWeights[col][row] = 999;
 				allVals.push_back(possMoveWeights[col][row]);
-				cerr << "Near Line 445: Value adding to the allVals vector is: 1000 " << endl;
+				cerr << "Near Line 445: Value adding to the allVals vector is: 999 " << endl;
 				// Space is Empty
 			} else {
 				cerr << "Near Line 450: Determined that there is not a  piece there" << endl;
@@ -540,16 +540,16 @@ void Grid::takeComputerTurn(){
 
 		for (int col = 0; col < 10; col++) {
 			for (int row = 0; row < 10; row++) {
-				if (possMoveWeights[row][col] == sortedVals[lowestPossValueIndex]) {
+				if (possMoveWeights[col][row] == sortedVals[lowestPossValueIndex]) {
 					cerr << "Near line 468: The value at the possMoveWeights[row][col] is equal to the lowest value in sortedVals: " + to_string(sortedVals[lowestPossValueIndex]) << endl;
-					int attackOption = WithinAttackingRange(row,col);
+					int attackOption = WithinAttackingRange(col,row);
 					cerr << "near line 470: attackOption was just returned, it is: " + to_string(attackOption) << endl;
 					if (attackOption > 0) {
 						cerr << "near line 472: attackOption is greater than 0" << endl;
 
 						if(attackOption == 1) {
 							cerr << "near line 475: attackOption is 1" << endl;
-							Gamepiece* compPiece = findcell(row+1,col);
+							Gamepiece* compPiece = findcell(row,col+1);
 							cerr << "near line 477: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 478: Attempting to move piece upwards..." << endl;
 							if(move('1',compPiece)){
@@ -559,7 +559,7 @@ void Grid::takeComputerTurn(){
 						} else if (attackOption == 2) {
 							cerr << "near line 482: attackOption is 2" << endl;
 
-							Gamepiece* compPiece = findcell(row-1,col);
+							Gamepiece* compPiece = findcell(row,col-1);
 							cerr << "near line 485: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 486: Attempting to move piece down..." << endl;
 							if(move('2',compPiece)){
@@ -569,7 +569,7 @@ void Grid::takeComputerTurn(){
 						} else if(attackOption == 4) {
 							cerr << "near line 490: attackOption is 3" << endl;
 
-							Gamepiece* compPiece = findcell(row,col-1);
+							Gamepiece* compPiece = findcell(row-1,col);
 							cerr << "near line 493: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 494: Attempting to move piece left..." << endl;
 							if(move('3',compPiece)){
@@ -578,7 +578,7 @@ void Grid::takeComputerTurn(){
 							cerr << "near line 496: piece was moved left" << endl;
 						} else {
 							cerr << "near line 498: attackOption should be 4, it is: " + to_string(attackOption) << endl;
-							Gamepiece* compPiece = findcell(row,col+1);
+							Gamepiece* compPiece = findcell(row+1,col);
 							cerr << "near line 500: assigned a Gampiece pointer named compPiece" << endl;
 							cerr << "near line 501: Attempting to move piece right..." << endl;
 							if(move('4',compPiece)){
@@ -605,7 +605,7 @@ void Grid::takeComputerTurn(){
 //					if(dir == 1){
 //						// direction is up
 //						if(!(row - 1 < 0)){
-//							possMoveWeights[row][col][dir] = 10000;
+//							possMoveWeights[row][col][dir] = 9990;
 //						}
 //						else if (pieceExistsThere(row-1,col,1)){
 //							possMoveWeights[row][col][dir] = playerTotal - (gameboard[row-1][col].getpower());
@@ -613,7 +613,7 @@ void Grid::takeComputerTurn(){
 //					} else if (dir == 2){
 //						// direction is down
 //						if(!(row + 1 > 10)){
-//							possMoveWeights[row][col][dir] = 10000;
+//							possMoveWeights[row][col][dir] = 9990;
 //						}
 //						else if(pieceExistsThere(row+1,col,1)){
 //							possMoveWeights[row][col][dir] = playerTotal - (gameboard[row-1][col].getpower());
@@ -621,7 +621,7 @@ void Grid::takeComputerTurn(){
 //					} else if (dir == 3){
 //						// direction is left
 //						if(!(col - 1 < 0)){
-//							possMoveWeights[row][col][dir] = 10000;
+//							possMoveWeights[row][col][dir] = 9990;
 //						}
 //						else if(pieceExistsThere(row,col-1,1)){
 //							possMoveWeights[row][col][dir] = playerTotal - (gameboard[row-1][col].getpower());
@@ -629,7 +629,7 @@ void Grid::takeComputerTurn(){
 //					} else {
 //						// dir == 4 direction is right
 //						if(!(col + 1 > 10)){
-//							possMoveWeights[row][col][dir] = 10000;
+//							possMoveWeights[row][col][dir] = 9990;
 //						}
 //						else if(pieceExistsThere(row,col+1,1)){
 //							possMoveWeights[row][col][dir] = playerTotal - (gameboard[row-1][col].getpower());
@@ -640,7 +640,7 @@ void Grid::takeComputerTurn(){
 //			else {
 //				// There isn't a piece there so every weight is high
 //				for(int dir = 0; dir < 4; dir++){
-//					possMoveWeights[row][col][dir] = 10000;
+//					possMoveWeights[row][col][dir] = 9990;
 //				}
 //			}
 }
