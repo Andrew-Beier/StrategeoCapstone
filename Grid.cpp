@@ -179,6 +179,13 @@ bool Grid::addGamepiece(Gamepiece* thisblock) {
 }
 	
 bool Grid::move(char direction, Gamepiece* thisblock) {
+	if(thisblock == NULL)
+	{
+		cout << "Attempted to Move NULL PIECE" << endl;
+		cout << "try again..." << endl;
+		cout << endl;
+		return false;
+	}
 	cerr << "Made it to the move function; values are... Direction: " + to_string(direction) + " block type: " << endl;
 	cerr << thisblock->getType() << endl;
 		int xshift = 0;
