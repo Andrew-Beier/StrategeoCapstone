@@ -553,8 +553,8 @@ void Grid::takeComputerTurn(){
 		cerr << "Near Line 462: Inside the lowestPossValueIndex for loop" << endl;
 		cerr << "Near line 463: Current value for lowestPossValueIndex is: " + to_string(lowestPossValueIndex) << endl;
 
-		for (int col = 0; col < 10; col++) {
-			for (int row = 0; row < 10; row++) {
+		for (int col = 9; col >= 0; col--) {
+			for (int row = 9; row >= 0 ; row--) {
 				if (possMoveWeights[col][row] == sortedVals[lowestPossValueIndex]) {
 					cerr << "Near line 468: The value at the possMoveWeights[row][col] is equal to the lowest value in sortedVals: " + to_string(sortedVals[lowestPossValueIndex]) << endl;
 					int attackOption = WithinAttackingRange(row,col);
