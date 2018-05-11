@@ -23,11 +23,11 @@ using namespace std;
 // Add Remaining pieces movement
 
 // Write functional logic for the computer to be able to play with a human player
-	// Add troubleshooting option to reveal location of pieces
-	
+// Add troubleshooting option to reveal location of pieces
+
 // Expand on the above through learning
-	// Keeps track of pieces
-	// Basic ML for setup
+// Keeps track of pieces
+// Basic ML for setup
 
 
 // Declare Main Function
@@ -37,19 +37,9 @@ int main()
 	// Starting ID # for pieces
 	int idcounter = 151;
 	string  quitchoice, pname;
-	char blockType, direction;
-	// set up a 9x9 grid
-	int gridX = 10;
-	int gridY = 10;
-	// total # of game pieces
-	int numblocks = 54;
-	// set the physical size of a piece
-	int blockDimX = 1;
-	int blockDimY = 1;
+	char direction;
 	// coordinate for position
 	int blockX, blockY;
-	// unused?
-	int t1pieces = 2;
 	// Movement magnitude
 	int moveX, moveY;
 	// Check to see if game should continue (actual game loop)
@@ -57,7 +47,7 @@ int main()
 	bool customSetup = false;
 
 	// Create an instance of Gamepiece, b
-	Gamepiece* b;	
+	Gamepiece* b;
 
 	// Get and store Player's name
 	cout << "Please enter your name: " <<endl;
@@ -66,24 +56,24 @@ int main()
 	// Welcome the player to the game
 	cout << "WELCOME TO STRATEGEO TRAINING" << endl;
 	cout << endl;
-	
+
 	// Create a new instance of a game Grid, given parameters gridY, gridX (size of grid)
 	// TODO - Remove parameters for Grid - > Already done in constructor
-	Grid* game = new Grid(gridY,gridX);
+	Grid* game = new Grid();
 	game->addComputerPieces();
-	
+
 	// Feedback for UX
 	cout << "Printing the Game Board" << endl;
 	cout << endl;
 	cout << endl;
-	
+
 	// Call printGrid method on the game object
 	game->printGrid();
 
 	// Add spacing for UX
 	cout << endl;
 	cout << endl;
-	
+
 	//Custom Setup is Disabled for Testing Purposes
 	if(customSetup){
 		// MAKE FIVE BOMBS
@@ -103,7 +93,7 @@ int main()
 			if(blockX >= 6 && blockY <= 8){
 				// Create a bomb object to be placed
 				Gamepiece* p = new Bomb(0,1,blockY,blockX, idcounter, "BOMB");
-				
+
 				if(game->addGamepiece(p)){
 					idcounter++;
 					cout << "Your Flag has been placed" << endl;
@@ -122,17 +112,17 @@ int main()
 			}
 			game->printGrid();
 		}
-		
+
 		//MAKE A FLAG
 		cout << "Next Place your flag" << endl;
 		for(int i = 0; i < 1; i++)
 		{
 			cout << "Pick a location for your flag" <<  endl;
 
-			
+
 			cout << "Pick a X coordinate (left side is 0)" << endl;
 			cin >> blockY;
-			
+
 			cout << "Pick a Y coordinate (6 to 8)" << endl;
 			cin >> blockX;//blockx and Y got switched somehow
 
@@ -140,7 +130,7 @@ int main()
 			if(blockX >= 6 && blockY <= 8)
 			{
 				Gamepiece* p = new Flag(12,1,blockY,blockX, idcounter, "FLAG");
-				
+
 				if(game->addGamepiece(p))
 				{
 					idcounter++;
@@ -160,17 +150,17 @@ int main()
 			}
 			game->printGrid();
 		}
-		
+
 		//SIX SIXES
 		cout << "Six Soldiers will have power of 6" << endl;
 		for(int i = 0; i < 6; i++)
 		{
 			cout << "Pick a location for 6* soldier number: " << (i+1) << endl;
 
-			
+
 			cout << "Pick a X coordinate (left side is 0)" << endl;
 			cin >> blockY;
-			
+
 			cout << "Pick a Y coordinate (6 to 8)" << endl;
 			cin >> blockX;//block x and Y got switched somehow
 
@@ -178,7 +168,7 @@ int main()
 			if(blockX >= 6 && blockY <= 8)
 			{
 				Gamepiece* p = new Gamepiece(6,1,blockY,blockX, idcounter, "SOLDIER");
-				
+
 				if(game->addGamepiece(p))
 				{
 					idcounter++;
@@ -204,10 +194,10 @@ int main()
 		{
 			cout << "Pick a location for 5* soldier number: " << (i+1) << endl;
 
-			
+
 			cout << "Pick a X coordinate (left side is 0)" << endl;
 			cin >> blockY;
-			
+
 			cout << "Pick a Y coordinate (6 to 8)" << endl;
 			cin >> blockX;//block x and Y got switched somehow
 
@@ -215,7 +205,7 @@ int main()
 			if(blockX >= 6 && blockY <= 8)
 			{
 				Gamepiece* p = new Gamepiece(5,1,blockY,blockX, idcounter, "SOLDIER");
-				
+
 				if(game->addGamepiece(p))
 				{
 					idcounter++;
@@ -235,18 +225,18 @@ int main()
 			}
 			game->printGrid();
 		}
-		
-		
+
+
 		//FOUR FOURS
 		cout << "four Soldiers will have power of 4" << endl;
 		for(int i = 0; i < 4; i++)
 		{
 			cout << "Pick a location for 4* soldier number: " << (i+1) << endl;
 
-			
+
 			cout << "Pick a X coordinate (left side is 0)" << endl;
 			cin >> blockY;
-			
+
 			cout << "Pick a Y coordinate (6 to 8)" << endl;
 			cin >> blockX;//block x and Y got switched somehow
 
@@ -254,7 +244,7 @@ int main()
 			if(blockX >= 6 && blockY <= 8)
 			{
 				Gamepiece* p = new Gamepiece(4,1,blockY,blockX, idcounter, "SOLDIER");
-				
+
 				if(game->addGamepiece(p))
 				{
 					idcounter++;
@@ -274,17 +264,17 @@ int main()
 			}
 			game->printGrid();
 		}
-		
+
 		//THREE THREES
 		cout << "four Soldiers will have power of 3" << endl;
 		for(int i = 0; i < 3; i++)
 		{
 			cout << "Pick a location for 3* soldier number: " << (i+1) << endl;
 
-			
+
 			cout << "Pick a X coordinate (left side is 0)" << endl;
 			cin >> blockY;
-			
+
 			cout << "Pick a Y coordinate (6 to 8)" << endl;
 			cin >> blockX;//block x and Y got switched somehow
 
@@ -292,7 +282,7 @@ int main()
 			if(blockX >= 6 && blockY <= 8)
 			{
 				Gamepiece* p = new Gamepiece(3,1,blockY,blockX, idcounter, "SOLDIER");
-				
+
 				if(game->addGamepiece(p))
 				{
 					idcounter++;
@@ -312,17 +302,17 @@ int main()
 			}
 			game->printGrid();
 		}
-		
+
 		//TWO TWOS
 		cout << "Two Soldiers will have power of 2" << endl;
 		for(int i = 0; i < 2; i++)
 		{
 			cout << "Pick a location for 2* soldier number: " << (i+1) << endl;
 
-			
+
 			cout << "Pick a X coordinate (left side is 0)" << endl;
 			cin >> blockY;
-			
+
 			cout << "Pick a Y coordinate (6 to 8)" << endl;
 			cin >> blockX;//block x and Y got switched somehow
 
@@ -330,7 +320,7 @@ int main()
 			if(blockX >= 6 && blockY <= 8)
 			{
 				Gamepiece* p = new Gamepiece(2,1,blockY,blockX, idcounter, "SOLDIER");
-				
+
 				if(game->addGamepiece(p))
 				{
 					idcounter++;
@@ -350,17 +340,17 @@ int main()
 			}
 			game->printGrid();
 		}
-		
+
 		//A SINGLE ONE
 		cout << "You only get one soldier with power of 1" << endl;
 		for(int i = 0; i < 1; i++)
 		{
 			cout << "Pick a location for 1* soldier number: " << (i+1) << endl;
 
-			
+
 			cout << "Pick a X coordinate (left side is 0)" << endl;
 			cin >> blockY;
-			
+
 			cout << "Pick a Y coordinate (6 to 8)" << endl;
 			cin >> blockX;//block x and Y got switched somehow
 
@@ -368,7 +358,7 @@ int main()
 			if(blockX >= 6 && blockY <= 8)
 			{
 				Gamepiece* p = new Gamepiece(1,1,blockY,blockX, idcounter, "SOLDIER");
-				
+
 				if(game->addGamepiece(p))
 				{
 					idcounter++;
@@ -389,7 +379,7 @@ int main()
 			game->printGrid();
 		}
 	}
-	
+
 	//Automatic placement of player pieces
 	for(int i = 0; i < 1; i++)// FLAG
 	{
@@ -397,7 +387,7 @@ int main()
 		game->addGamepiece(p);
 		idcounter ++;
 	}
-	
+
 	for(int i = 0; i < 6; i++)//power 6
 	{
 		blockX = i;
@@ -405,7 +395,7 @@ int main()
 		game->addGamepiece(p);
 		idcounter ++;
 	}
-	
+
 	for(int i = 0; i < 2; i++)// power 2
 	{
 		blockX = i;
@@ -413,7 +403,7 @@ int main()
 		game->addGamepiece(p);
 		idcounter ++;
 	}
-	
+
 	for(int i = 0; i < 5; i++)// BOMBS
 	{
 		blockX = i;
@@ -421,7 +411,7 @@ int main()
 		game->addGamepiece(p);
 		idcounter ++;
 	}
-	
+
 	for(int i = 0; i < 4; i++)// power 4
 	{
 		blockX = i;
@@ -429,7 +419,7 @@ int main()
 		game->addGamepiece(p);
 		idcounter ++;
 	}
-	
+
 	for(int i = 0; i < 3; i++)// power 3
 	{
 		blockX = i;
@@ -437,7 +427,7 @@ int main()
 		game->addGamepiece(p);
 		idcounter ++;
 	}
-	
+
 	for(int i = 0; i < 5; i++)// power 5
 	{
 		blockX = i;
@@ -445,7 +435,7 @@ int main()
 		game->addGamepiece(p);
 		idcounter ++;
 	}
-	
+
 	for(int i = 0; i < 1; i++)// power 1
 	{
 		blockX = i;
@@ -455,7 +445,7 @@ int main()
 	}
 	//Automatic placement of player pieces Complete
 
-	
+
 	cout << endl;
 	cout << "THE BOARD IS SET" << endl;
 	cout << "This is a training game, so the computer won't attack you" << endl;
@@ -464,7 +454,7 @@ int main()
 	game->printGrid();
 	cout << endl;
 	cout << endl;
-	
+
 
 	while(moreMove)
 	{
@@ -472,46 +462,46 @@ int main()
 		vector<string> pvec = game->scancount(1);//could be used for more, but the other features are not helpfull
 		cout << pname << " it is your turn." << endl;
 		cout << "You have " << pvec.size() << " pieces under your command" << endl;
-			
+
 		cout << "Pick a X coordinate for a movable block:" << endl;
 		cin >> moveY;
-	
+
 		cout <<"Pick an Y Coordinate for a movable block:" << endl;
 		cin >> moveX;
-		
-			if(game->findcell(moveY,moveX) == NULL)
+
+		if(game->findcell(moveY,moveX) == NULL)
+		{
+			cout << "That space is empty" << endl;
+			cout << "try again..." << endl;
+		}
+		else if((game->findcell(moveY,moveX))-> getteam() == 2)
+		{
+			cout << "That is not your piece" << endl;
+			cout << "try again..." << endl;
+		}
+		else
+		{
+			cout << "Pick a direction 1:up, 2:down, 3:left, or 4:right?" << endl;
+			cin >> direction;
+
+			b = game->findcell(moveY,moveX);
+			if(game->move(direction,b))
 			{
-				cout << "That space is empty" << endl;
-				cout << "try again..." << endl;
+				game->printGrid();
+				cout << endl;
+				game->takeComputerTurn();
 			}
-			else if((game->findcell(moveY,moveX))-> getteam() == 2)
-			{
-				cout << "That is not your piece" << endl;
-				cout << "try again..." << endl;
-			}
-			else
-			{
-				cout << "Pick a direction 1:up, 2:down, 3:left, or 4:right?" << endl;
-				cin >> direction;
-			
-				b = game->findcell(moveY,moveX);
-				if(game->move(direction,b))
-				{
-					game->printGrid();
-					cout << endl;
-					game->takeComputerTurn();
-				}		
-				
-			}	
-			
-			game->printGrid();
-			
+
+		}
+
+		game->printGrid();
+
 		if (game->findwinner() != 0)
 		{
 			cout << "PLAYER " <<  game->findwinner() << " WINS!" << endl;
 			moreMove = false;
 		}
-			
+
 	}
 	return 0;
 }

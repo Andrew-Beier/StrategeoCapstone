@@ -10,40 +10,40 @@
 
 #include <iostream>
 #include <string>
-#include <cstdlib> 
+#include <cstdlib>
 #include <stdlib.h>
 
 using namespace std;
 
 class Gamepiece
 {
-    protected:
-		string blocktype;
-		int power;
-		int team;
-		int topleftX, topleftY;
-		int farsideX, farsideY;
-		int id;
-		
-	public:
-		Gamepiece(int , int , int , int , int ,string);
-		Gamepiece();
-		int getId();
-		string getType();
-		int getblockW();
-		int getblockH();
-		int getTopLeftX();
-		int getTopLeftY();
-		int getfarsideX();
-		int getfarsideY();
-		int getpower();
-		int getteam();
-		void move1(int, int);
-		virtual string getDisplay();
-		virtual ~Gamepiece();
-		virtual bool canattack();
-		virtual bool canmove();
-		virtual bool isfixed();
+protected:
+	string blocktype;
+	int power;
+	int team;
+	int topleftX, topleftY;
+	int farsideX, farsideY;
+	int id;
+
+public:
+	Gamepiece(int , int , int , int , int ,string);
+	Gamepiece();
+	int getId();
+	string getType();
+	int getblockW();
+	int getblockH();
+	int getTopLeftX();
+	int getTopLeftY();
+	int getfarsideX();
+	int getfarsideY();
+	int getpower();
+	int getteam();
+	void move1(int, int);
+	virtual string getDisplay();
+	virtual ~Gamepiece();
+	virtual bool canattack();
+	virtual bool canmove();
+	virtual bool isfixed();
 
 };
 

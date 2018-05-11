@@ -10,20 +10,20 @@
 
 #include <iostream>
 #include <string>
-#include <cstdlib> 
+#include <cstdlib>
 #include <stdlib.h>
 
 #include "Gamepiece.h"
 
 
 class Bomb : public Gamepiece {
-    public:
+public:
 	Bomb(int , int , int , int , int ,string);
 	virtual string getDisplay();
 	virtual ~Bomb();
 	virtual bool canattack();
-	virtual bool canmove();	
-    virtual bool isfixed();
+	virtual bool canmove();
+	virtual bool isfixed();
 };
 
 

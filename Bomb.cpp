@@ -7,15 +7,15 @@ using namespace std;
 
 
 Bomb::Bomb(int a, int b, int c, int d, int thisID, string btype): Gamepiece(0,b,c,d,thisID,"BOMB"){
-	
+
 }
 
 bool Bomb::canmove(){
-	return 0;	
+	return false;
 }
-	
+
 bool Bomb::canattack(){
-	return 0;
+	return false;
 }
 
 string Bomb::getDisplay(){
@@ -31,9 +31,7 @@ string Bomb::getDisplay(){
 }
 
 bool Bomb::isfixed(){
-	return 1;	
+	return true;
 }
 
-Bomb::~Bomb(){
-
-}
+Bomb::~Bomb() = default;

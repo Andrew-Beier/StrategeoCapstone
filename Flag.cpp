@@ -10,17 +10,17 @@ using namespace std;
 
 Flag::Flag(int a, int b, int c, int d, int thisID,string btype): Gamepiece(12,b,c,d,thisID,"FLAG")
 {
-	
+
 }
 
 bool Flag::canmove()
 {
-	return 0;	
+	return false;
 }
-	
+
 bool Flag::canattack()
 {
-	return 0;
+	return false;
 }
 
 string Flag::getDisplay()
@@ -37,11 +37,9 @@ string Flag::getDisplay()
 
 bool Flag::isfixed()
 {
-	return 1;
+	return true;
 }
 
 
 Flag::~Flag()
-{
-
-}
+= default;

@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <string>
-#include <cstdlib> 
+#include <cstdlib>
 #include <stdlib.h>
 
 #include "Gamepiece.h"
@@ -18,14 +18,14 @@
 
 class Flag : public Gamepiece
 {
-    public:
+public:
 	Flag(int , int , int , int , int ,string);
 	virtual string getDisplay();
 	virtual ~Flag();
 	virtual bool canattack();
-	virtual bool canmove();	
+	virtual bool canmove();
 	virtual bool isfixed();
-    
+
 };
 
 #endif

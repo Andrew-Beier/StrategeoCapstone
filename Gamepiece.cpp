@@ -14,7 +14,7 @@ Gamepiece::Gamepiece(int a, int b, int c, int d, int thisID, string btype){
 	id = thisID;
 	blocktype = btype;
 	farsideX = c;
-	farsideY = d;	
+	farsideY = d;
 }
 
 Gamepiece::Gamepiece(){
@@ -43,7 +43,7 @@ int Gamepiece::getblockW(){
 int Gamepiece::getblockH(){
 	return 1;
 }
-	
+
 int Gamepiece::getTopLeftX(){
 	return topleftX;
 }
@@ -55,11 +55,11 @@ int Gamepiece::getTopLeftY(){
 int Gamepiece::getfarsideX(){
 	return farsideX;
 }
-	
+
 int Gamepiece::getfarsideY(){
 	return farsideY;
 }
-	
+
 int Gamepiece::getpower(){
 	return power;
 }
@@ -72,22 +72,22 @@ void Gamepiece::move1(int x, int y) {
 	//moves 1 space in any given direction
 	topleftX += x;
 	farsideX += x;
-		
+
 	topleftY += y;
 	farsideY += y;
 	cout << "move1 fuction activated " << x << " , " << y << endl;
 }
 
 bool Gamepiece::canmove(){
-	return 1;	
+	return true;
 }
-	
+
 bool Gamepiece::canattack(){
-	return 1;
+	return true;
 }
 
 string Gamepiece::getDisplay(){
-	if (0)//CHANGE BACK TO (team == 2)
+	if (team == 2)//CHANGE BACK TO (team == 2)
 	{
 		return " # ";
 	}
@@ -98,14 +98,12 @@ string Gamepiece::getDisplay(){
 		ss << " " << power << " ";
 		return ss.str();
 	}
-	
-}
-
-Gamepiece::~Gamepiece(){
 
 }
+
+Gamepiece::~Gamepiece() = default;
 
 bool Gamepiece::isfixed(){
-	return 0;
+	return false;
 }
 
