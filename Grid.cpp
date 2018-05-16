@@ -75,7 +75,6 @@ Gamepiece *Grid::findcell(int x, int y) {
 }
 
 int Grid::seeopen(Gamepiece *thisblock, bool started) {
-    cout << "SCANNING TARGET SPACE" << endl;
     // Revisit This later for necessity
     if (thisblock->getTopLeftX() < 0 || thisblock->getTopLeftY() < 0 || thisblock->getTopLeftY() > 10 ||
         thisblock->getTopLeftX() > 10) {//if the block goes past any edge of the grid
@@ -84,7 +83,6 @@ int Grid::seeopen(Gamepiece *thisblock, bool started) {
     }
         // Is the board space that the user is trying to move to open?
     else if (gameboard[thisblock->getTopLeftX()][thisblock->getTopLeftY()] == nullptr) {
-        cout << "SPACE IS OPEN" << endl;
         return 1;
     } else {
 
@@ -326,6 +324,19 @@ void Grid::addComputerPieces() {
         addGamepiece(p);
         idcounter++;
     }
+	
+	for (int i = 0; i < 1; i++) { // The spy
+        Gamepiece *p = new Gamepiece(10, 2, 0, 3, idcounter, "SPY");
+        addGamepiece(p);
+        idcounter++;
+    }
+	
+    for (int i = 1; i < 6; i++) { // Five Miners
+        Gamepiece *p = new Gamepiece(8, 2, i, 3, idcounter, "MINER");
+        addGamepiece(p);
+        idcounter++;
+    }
+
 }
 
 // Determine if the piece at a space belongs to the given player
@@ -365,6 +376,16 @@ int Grid::WithinAttackingRange(int row, int col) {
 }
 
 void Grid::takeComputerTurn() {
+	
+	for (int i = 0; i < 1000000000; i++)
+	{//Give player a chance to read before computer takes turn
+		if(i%200000000==0)
+		{
+			cout << "....." << endl ;
+			//Computer pretends to think
+		}
+	}
+	
     int playerTotal = 0;
     // Absolute Max player Value for the turn prior to any moves
     for (int row = 0; row < 10; row++) {

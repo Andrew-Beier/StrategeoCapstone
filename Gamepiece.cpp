@@ -86,10 +86,17 @@ bool Gamepiece::canattack() {
 }
 
 string Gamepiece::getDisplay() {
-    if (team == 2)//CHANGE BACK TO (team == 2)
+    if (team == 2)
     {
         return " # ";
-    } else {
+    } 
+	else if(power == 10)
+	{
+		stringstream ss;
+        ss << " " << "s" << " ";
+        return ss.str();
+	}
+	else {
 
         stringstream ss;
         ss << " " << power << " ";

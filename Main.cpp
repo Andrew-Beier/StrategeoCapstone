@@ -365,7 +365,7 @@ int main() {
     for (int i = 0; i < 5; i++)// power 5
     {
         blockX = i;
-        Gamepiece *p = new Gamepiece(5, 1, i + 3, 6, idcounter, "SOLDIER");
+        Gamepiece *p = new Gamepiece(5, 1, i, 9, idcounter, "SOLDIER");
         game->addGamepiece(p);
         idcounter++;
     }
@@ -377,12 +377,26 @@ int main() {
         game->addGamepiece(p);
         idcounter++;
     }
+	for (int i = 0; i < 1; i++)// TheS py
+    {
+        blockX = i;
+        Gamepiece *p = new Gamepiece(10, 1, 9, 6, idcounter, "SPY");
+        game->addGamepiece(p);
+        idcounter++;
+    }
+	
+	for (int i = 0; i < 5; i++)// Five Miners
+    {
+        blockX = i;
+        Gamepiece *p = new Gamepiece(8, 1, i + 3, 6, idcounter, "MINER");
+        game->addGamepiece(p);
+        idcounter++;
+    }
     //Automatic placement of player pieces Complete
 
 
     cout << endl;
     cout << "THE BOARD IS SET" << endl;
-    cout << "This is a training game, so the computer won't attack you" << endl;
     cout << "THE GAME WILL NOW BEGIN!" << endl;
     cout << endl;
     game->printGrid();
@@ -416,7 +430,10 @@ int main() {
             if (game->move(direction, b)) {
                 game->printGrid();
                 cout << endl;
+				cout << "The Computer is now taking its turn" << endl << endl;
+
                 game->takeComputerTurn();
+				cout << endl << "The Computer has made its turn" << endl;
             }
 
         }
