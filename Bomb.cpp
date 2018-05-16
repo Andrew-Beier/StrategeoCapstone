@@ -6,32 +6,29 @@
 using namespace std;
 
 
-Bomb::Bomb(int a, int b, int c, int d, int thisID, string btype): Gamepiece(0,b,c,d,thisID,"BOMB"){
+Bomb::Bomb(int b, int c, int d, int thisID) : Gamepiece(0, b, c, d, thisID, "BOMB") {
 
 }
 
-bool Bomb::canmove(){
-	return false;
+bool Bomb::canmove() {
+    return false;
 }
 
-bool Bomb::canattack(){
-	return false;
+bool Bomb::canattack() {
+    return false;
 }
 
-string Bomb::getDisplay(){
+string Bomb::getDisplay() {
 
-	if (team == 2)
-	{
-		return " # ";
-	}
-	else
-	{
-		return " B ";
-	}
+    if (team == 2) {
+        return " # ";
+    } else {
+        return " B ";
+    }
 }
 
-bool Bomb::isfixed(){
-	return true;
+bool Bomb::isfixed() {
+    return true;
 }
 
 Bomb::~Bomb() = default;

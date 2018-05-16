@@ -11,20 +11,24 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "Gamepiece.h"
 
 
-class Flag : public Gamepiece
-{
+class Flag : public Gamepiece {
 public:
-	Flag(int , int , int , int , int ,string);
-	virtual string getDisplay();
-	virtual ~Flag();
-	virtual bool canattack();
-	virtual bool canmove();
-	virtual bool isfixed();
+    Flag(int, int, int, int);
+
+    string getDisplay() override;
+
+    ~Flag() override;
+
+    bool canattack() override;
+
+    bool canmove() override;
+
+    bool isfixed() override;
 
 };
 

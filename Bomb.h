@@ -11,19 +11,24 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "Gamepiece.h"
 
 
 class Bomb : public Gamepiece {
 public:
-	Bomb(int , int , int , int , int ,string);
-	virtual string getDisplay();
-	virtual ~Bomb();
-	virtual bool canattack();
-	virtual bool canmove();
-	virtual bool isfixed();
+    Bomb(int, int, int, int);
+
+    string getDisplay() override;
+
+    ~Bomb() override;
+
+    bool canattack() override;
+
+    bool canmove() override;
+
+    bool isfixed() override;
 };
 
 

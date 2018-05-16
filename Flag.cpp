@@ -8,36 +8,28 @@
 using namespace std;
 
 
-Flag::Flag(int a, int b, int c, int d, int thisID,string btype): Gamepiece(12,b,c,d,thisID,"FLAG")
-{
+Flag::Flag(int b, int c, int d, int thisID) : Gamepiece(12, b, c, d, thisID, "FLAG") {
 
 }
 
-bool Flag::canmove()
-{
-	return false;
+bool Flag::canmove() {
+    return false;
 }
 
-bool Flag::canattack()
-{
-	return false;
+bool Flag::canattack() {
+    return false;
 }
 
-string Flag::getDisplay()
-{
-	if (team == 2)
-	{
-		return " # ";
-	}
-	else
-	{
-		return " F ";
-	}
+string Flag::getDisplay() {
+    if (team == 2) {
+        return " # ";
+    } else {
+        return " F ";
+    }
 }
 
-bool Flag::isfixed()
-{
-	return true;
+bool Flag::isfixed() {
+    return true;
 }
 
 
